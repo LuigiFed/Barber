@@ -1,0 +1,76 @@
+<nav>
+  <div class="navbar">
+    <div class="container nav-container">
+      <input class="checkbox" type="checkbox" name="" id="" />
+      <div class="hamburger-lines">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+      <div class="menu-items">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">about</a></li>
+        <li><a href="#">blogs</a></li>
+        <li><a href="#">portfolio</a></li>
+        <li><a href="#">contact</a></li>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="descrizione">
+  <h2>Barberia Moderna – Stile, Precisione e Relax</h2>
+  <p>
+    Da noi il taglio non è solo un servizio, ma un’esperienza. Offriamo tagli
+    moderni, rasature classiche e trattamenti barba personalizzati, il tutto in
+    un ambiente accogliente e rilassato. Prenota facilmente il tuo appuntamento
+    online e lascia che ci prendiamo cura del tuo look con professionalità e
+    attenzione ai dettagli.
+  </p>
+</section>
+
+<div class="servizi">
+  <div class="servizio" (click)="selectService('Taglio')">
+    <img src="/capelli.jpg" alt="Test" width="200" />
+  </div>
+  <div class="servizio" (click)="selectService('Barba')">
+    <img src="/barba.jpg" alt="" />
+  </div>
+  <div class="servizio" (click)="selectService('Completo')">
+    <img src="/completo.jpg" alt="" />
+  </div>
+</div>
+
+<!-- Carousel giorni -->
+<div class="carousel-wrapper">
+  <div class="card-container">
+    <div
+      class="card"
+      *ngFor="let day of getNext7Days()"
+      [class.selected]="isSelected(day)"
+      (click)="selectDate(day)"
+    >
+      <h3>{{ day | date : "EEEE" }}</h3>
+      <p>{{ day | date : "dd/MM" }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Contenitore orari, fuori dal carousel -->
+<div class="orari-container" *ngIf="selectedDate && !selectedTime">
+  <h4>Orari disponibili per {{ selectedDate | date : "dd/MM/yyyy" }}:</h4>
+  <div class="time-grid">
+    <div
+      class="time-slot"
+      *ngFor="let t of timeSlots"
+      [class.selTime]="selectedTime === t"
+      (click)="selectTime(t)"
+    >
+      {{ t }}
+    </div>
+  </div>
+</div>
+
+<section class="riepilogo">
+  <i class="icon fa-solid fa-list-check"></i>
+</section>
