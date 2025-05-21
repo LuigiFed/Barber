@@ -1,3 +1,9 @@
 import { Routes } from '@angular/router';
+import { AuthComponent } from './components/auth/auth.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomePageComponent },
+  { path: 'auth', component: AuthComponent },
+];

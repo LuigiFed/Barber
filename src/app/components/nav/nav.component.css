@@ -1,0 +1,118 @@
+/*#region NAVBAR*/
+
+.navbar {
+  width: 100%;
+  box-shadow: 0 1px 4px rgb(146 161 176 / 15%);
+  z-index: 100;
+}
+
+.nav-container {
+  position: relative;
+  display: block;
+  height: 60px;
+}
+
+.nav-container .checkbox {
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  top: 17px;
+  left: 20px;
+  z-index: 9999;
+  opacity: 0;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-container .hamburger-lines {
+  display: block;
+  height: 26px;
+  width: 32px;
+  position: absolute;
+  top: 17px;
+  left: 20px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hamburger-lines .line {
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: #0e2431;
+  z-index: 100;
+}
+.line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+.line2 {
+  transition: transform 0.2s ease-in-out;
+}
+.line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+
+.user{
+  font-size: 30px;
+   height: 26px;
+  width: 32px;
+   position: absolute;
+  top: 17px;
+  right: 20px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.menu-items {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 50px; /* <-- questa è la chiave */
+  padding-top: 100px;
+  width: 100%;
+  background: #112d4ed3;
+  transform: translateX(-150%);
+  transition: transform 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  z-index: 999;
+  overflow-y: auto; /* così scrolla se serve */
+}
+
+.menu-items li {
+  list-style: none;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 800;
+}
+.menu-items a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.7rem;
+  font-weight: 500;
+}
+.menu-items a:hover {
+  font-weight: bolder;
+}
+
+.nav-container input[type="checkbox"]:checked ~ .menu-items {
+  transform: translateX(0);
+}
+.nav-container input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+  transform: rotate(45deg);
+}
+.nav-container input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+  transform: scaleY(0);
+}
+.nav-container input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+  transform: rotate(-45deg);
+}
+
+/*#endregion NAVBAR*/
