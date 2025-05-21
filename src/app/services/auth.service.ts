@@ -14,6 +14,8 @@ import { app } from '../../firebase-config';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
+  private currentUser: User | null = null;
+
   login(email: string, password: string) {
     const auth = getAuth(app);
     return signInWithEmailAndPassword(auth, email, password);
@@ -22,6 +24,15 @@ export class AuthService {
  subscribeAuthState(callback: (user: User | null) => void) {
   const auth = getAuth(app);
   return onAuthStateChanged(auth, callback);
+}
+
+getUser() {
+  return this.currentUser;
+}
+
+logout() {
+  const auth = getAuth(app);
+  return auth.signOut();
 }
 
 }

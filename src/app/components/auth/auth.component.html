@@ -1,14 +1,27 @@
 <app-nav></app-nav>
 
 <div class="auth-container">
-  <form action="" >
-    <input type="text" placeholder="Username" />
-    <input type="password" placeholder="Password" />
-    <button class="submit" type="submit" (click)="logIn()">Accedi</button>
+  <form #loginForm="ngForm" (ngSubmit)="logIn(loginForm)">
+    <input
+      type="text"
+      name="email"
+      placeholder="Email"
+      ngModel
+      required
+    />
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      ngModel
+      required
+    />
+    <button class="submit" type="submit">Accedi</button>
 
     <span><a href="">Iscriviti!</a></span>
   </form>
 </div>
+
 
 
 <section class="riepilogo">
