@@ -1,4 +1,8 @@
-
+.prenotazione {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 /*#region FORM*/
 
 .carousel-wrapper {
