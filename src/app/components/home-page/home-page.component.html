@@ -43,32 +43,31 @@
 
 <!-- Carousel giorni -->
 <div class="carousel-wrapper">
-<div
-  class="card"
-  *ngFor="let day of getNext7Days()"
-  tabindex="0"
-  (click)="selectDate(day)"
-  [class.selected]="isSelected(day)"
->
-  <p>{{ day | date : "EEEE" }}</p>
-  <p>{{ day | date : "dd/MM" }}</p>
+  <div
+    class="card"
+    *ngFor="let day of getNext7Days()"
+    tabindex="0"
+    (click)="selectDate(day)"
+    [class.selected]="isSelected(day)"
+  >
+    <p>{{ day | date : "EEEE" }}</p>
+    <p>{{ day | date : "dd/MM" }}</p>
+  </div>
 </div>
 
-</div>
-
-
-<!-- Contenitore orari, fuori dal carousel -->
-<div class="time-grid-scroll">
+<!-- Fasce orarie visibili solo se c'è una data selezionata -->
+<div *ngIf="selectedDate" class="time-grid-scroll">
   <div
     class="time-slot"
-    *ngFor="let t of timeSlots"
+    *ngFor="let t of getAvailableTimeSlots()"
     (click)="selectTime(t)"
-    [class.selected]="selectedTime === t"
     tabindex="0"
   >
     {{ t }}
   </div>
 </div>
+
+
 </section>
 
 <section class="riepilogo">

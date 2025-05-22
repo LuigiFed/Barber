@@ -51,7 +51,7 @@ export class HomePageComponent {
     time: null as string | null,
     service: null as string | null,
   };
-
+bookedTimeSlots: string[] = [];
   appointments: { date: Date; time: string; service: string }[] = [];
   showAppointmentsList: boolean | undefined;
   showTimeSlots: boolean | undefined;
@@ -62,27 +62,49 @@ export class HomePageComponent {
     private authService: AuthService
   ) {}
 
-  getNext7Days(): Date[] {
-    const days: Date[] = [];
-    for (let i = 0; i < 14; i++) {
-      const date = new Date(this.today);
-      date.setDate(this.today.getDate() + i);
+getNext7Days(): Date[] {
+  const days: Date[] = [];
+  let i = 0;
+  while (days.length < 14) {  // vogliamo 7 giorni validi
+    const date = new Date(this.today);
+    date.setDate(this.today.getDate() + i);
+
+    const dayOfWeek = date.getDay(); // domenica = 0, lunedi = 1
+    if (dayOfWeek !== 0 && dayOfWeek !== 1) {
       days.push(date);
     }
-    return days;
+    i++;
   }
+  return days;
+}
+getAvailableTimeSlots(): string[] {
+  return this.timeSlots.filter(t => !this.bookedTimeSlots.includes(t));
+}
 
-  selectDate(date: Date) {
-    if (this.selectedDate?.toDateString() === date.toDateString()) {
-      this.selectedDate = null;
-      this.currentAppointment.date = null;
-      this.selectedTime = null;
-      this.currentAppointment.time = null;
-    } else {
-      this.selectedDate = date;
-      this.currentAppointment.date = date;
-    }
+formatDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = ('0' + (date.getMonth() + 1)).slice(-2);
+  const d = ('0' + date.getDate()).slice(-2);
+  return `${y}-${m}-${d}`;
+}
+async selectDate(date: Date) {
+  if (this.selectedDate?.toDateString() === date.toDateString()) {
+    this.selectedDate = null;
+    this.currentAppointment.date = null;
+    this.selectedTime = null;
+    this.currentAppointment.time = null;
+    this.bookedTimeSlots = [];
+  } else {
+    this.selectedDate = date;
+    this.currentAppointment.date = date;
+
+    // formatta la data come stringa 'YYYY-MM-DD' per Firestore
+    const formattedDate = this.formatDate(date);
+
+    // aspetta la lista degli orari già prenotati per la data selezionata
+    this.bookedTimeSlots = await this.reservationService.getBookedTimeSlots(formattedDate);
   }
+}
 
   isSelected(date: Date): boolean {
     return this.selectedDate?.toDateString() === date.toDateString();
@@ -107,28 +129,34 @@ export class HomePageComponent {
       this.currentAppointment.service = service;
     }
   }
-  addElement() {
-    const { date, time, service } = this.currentAppointment;
+addElement() {
+  const { date, time, service } = this.currentAppointment;
 
-    if (!date || !time || !service) {
-      return;
-    }
-
-    // Sostituisci la prenotazione esistente o aggiungi la prima
-    if (this.appointments.length > 0) {
-      this.appointments[0] = { date, time, service };
-    } else {
-      this.appointments.push({ date, time, service });
-    }
-
-    this.showAppointmentsList = true;
-
-    this.currentAppointment = {
-      date: null,
-      time: null,
-      service: null,
-    };
+  if (!date || !time || !service) {
+    return;
   }
+
+
+  if (this.appointments.length > 0) {
+    this.appointments[0] = { date, time, service };
+  } else {
+    this.appointments.push({ date, time, service });
+  }
+
+
+  if (!this.bookedTimeSlots.includes(time)) {
+    this.bookedTimeSlots.push(time);
+  }
+
+  this.showAppointmentsList = true;
+
+  this.currentAppointment = {
+    date: null,
+    time: null,
+    service: null,
+  };
+}
+
   closeDialog(result: boolean) {
     this.dialog.closeAll();
 

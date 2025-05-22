@@ -20,19 +20,16 @@ export class AuthComponent {
 loginError: string | null = null;
 
 async logIn(form: NgForm) {
-  this.loginError = null; // reset errore prima di ogni tentativo
-  if (!form.valid) return;
-
   const { email, password } = form.value;
   try {
     await this.authService.login(email, password);
     console.log('Login riuscito');
-    this.router.navigate(['/home']);
+    await this.router.navigate(['/home']);
   } catch (error: any) {
     console.error('Login fallito', error.message);
-    this.loginError = 'Credenziali errate o problema di connessione.';
   }
 }
+
 
   async register(form: NgForm) {
     if (!form.valid) return;

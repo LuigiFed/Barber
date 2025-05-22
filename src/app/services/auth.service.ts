@@ -13,7 +13,17 @@ import { app } from '../../firebase-config';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+ constructor(private http: HttpClient) {
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
+    this.currentUser = user;
+    if (user) {
+      localStorage.setItem('userToken', user.uid);
+    } else {
+      localStorage.removeItem('userToken');
+    }
+  });
+}
 
   private currentUser: User | null = null;
 
