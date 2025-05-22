@@ -202,14 +202,12 @@
 }
 
 .riepilogo {
-  height: 50px;
+  height: 60px;
   background-color: #0e2431;
-  border: 1px solid black;
   position: fixed;
   left: 0;
   right: 0;
   z-index: 999;
-    padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 
