@@ -27,15 +27,16 @@
 
 <!-- Carousel giorni -->
 <div class="carousel-wrapper">
-  <div
-    class="card"
-    *ngFor="let day of getNext7Days()"
-    [class.selected]="isSelected(day)"
-    (click)="selectDate(day)"
-  >
-    <p>{{ day | date : "EEEE" }}<p>
-    <p>{{ day | date : "dd/MM" }}</p>
-  </div>
+<div
+  class="card"
+  *ngFor="let day of getNext7Days()"
+  tabindex="0"
+  (click)="selectDate(day)"
+>
+  <p>{{ day | date : "EEEE" }}<p>
+  <p>{{ day | date : "dd/MM" }}</p>
+</div>
+
 </div>
 
 
@@ -44,7 +45,6 @@
   <div
     class="time-slot"
     *ngFor="let t of timeSlots"
-    [class.selTime]="selectedTime === t"
     (click)="selectTime(t)"
   >
     {{ t }}
