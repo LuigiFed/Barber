@@ -95,6 +95,7 @@ addElement() {
         await this.reservationService.addReservation(res);
       }
     setTimeout(() => {
+      document.body.classList.add('swal-open-custom');
       Swal.fire({
         title: "Prenotazione effettuata con successo!",
         icon: "success",
