@@ -247,3 +247,15 @@
   font-weight: bold;
   transform: scale(0.97);
 }
+.card.selected {
+  border: 1px solid navy;
+  transform: scale(0.97);
+}
+.servizio.selected img {
+  border: 1px solid navy;
+  transform: scale(0.97);
+}
+.time-slot.selected {
+  border: 1px solid navy ;
+  transform: scale(0.97);
+}

@@ -47,26 +47,40 @@ constructor(private reservationService: PrenotazioniService, private dialog: Mat
   }
 
 selectDate(date: Date) {
-  this.selectedDate = date;
-  this.currentAppointment.date = date;
-  this.selectedTime = null;
+  if (this.selectedDate?.toDateString() === date.toDateString()) {
+    this.selectedDate = null;
+    this.currentAppointment.date = null;
+    this.selectedTime = null;
+    this.currentAppointment.time = null;
+  } else {
+    this.selectedDate = date;
+    this.currentAppointment.date = date;
+  }
 }
-
 
   isSelected(date: Date): boolean {
     return this.selectedDate?.toDateString() === date.toDateString();
   }
 
 selectTime(time: string) {
-  this.currentAppointment.time = time;
-  this.selectedTime = time;
-
+  if (this.selectedTime === time) {
+    this.selectedTime = null;
+    this.currentAppointment.time = null;
+  } else {
+    this.selectedTime = time;
+    this.currentAppointment.time = time;
+  }
 }
 
 
 selectService(service: string) {
-  this.currentAppointment.service = service;
-  this.selectedService = service;
+  if (this.selectedService === service) {
+    this.selectedService = null;
+    this.currentAppointment.service = null;
+  } else {
+    this.selectedService = service;
+    this.currentAppointment.service = service;
+  }
 }
 addElement() {
   const { date, time, service } = this.currentAppointment;
@@ -83,7 +97,7 @@ addElement() {
     this.appointments.push({ date, time, service });
   }
 
-  this.showAppointmentsList = !this.showAppointmentsList;
+  this.showAppointmentsList = true;
 
   this.currentAppointment = {
     date: null,

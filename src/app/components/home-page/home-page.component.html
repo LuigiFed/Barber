@@ -14,16 +14,32 @@
 
 <section class="prenotazione">
 <div class="servizi">
-  <div class="servizio" (click)="selectService('Taglio')">
+  <div
+    class="servizio"
+    (click)="selectService('Taglio')"
+    [class.selected]="selectedService === 'Taglio'"
+    tabindex="0"
+  >
     <img src="/capelli.jpg" alt="Test" width="200" />
   </div>
-  <div class="servizio" (click)="selectService('Barba')">
+  <div
+    class="servizio"
+    (click)="selectService('Barba')"
+    [class.selected]="selectedService === 'Barba'"
+    tabindex="0"
+  >
     <img src="/barba.jpg" alt="" />
   </div>
-  <div class="servizio" (click)="selectService('Completo')">
+  <div
+    class="servizio"
+    (click)="selectService('Completo')"
+    [class.selected]="selectedService === 'Completo'"
+    tabindex="0"
+  >
     <img src="/completo.jpg" alt="" />
   </div>
 </div>
+
 
 <!-- Carousel giorni -->
 <div class="carousel-wrapper">
@@ -32,8 +48,9 @@
   *ngFor="let day of getNext7Days()"
   tabindex="0"
   (click)="selectDate(day)"
+  [class.selected]="isSelected(day)"
 >
-  <p>{{ day | date : "EEEE" }}<p>
+  <p>{{ day | date : "EEEE" }}</p>
   <p>{{ day | date : "dd/MM" }}</p>
 </div>
 
@@ -46,6 +63,8 @@
     class="time-slot"
     *ngFor="let t of timeSlots"
     (click)="selectTime(t)"
+    [class.selected]="selectedTime === t"
+    tabindex="0"
   >
     {{ t }}
   </div>
