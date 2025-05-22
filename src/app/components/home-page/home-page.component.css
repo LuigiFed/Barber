@@ -112,13 +112,11 @@
   font-weight: 500;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s ease, transform 0.2s ease;
   font-size: 14px;
 }
 
 .time-slot:hover {
   border: 3px solid #dfe6e9;
-  transform: scale(1.05);
   font-weight: bold;
 }
 
@@ -208,13 +206,10 @@
   background-color: #0e2431;
   border: 1px solid black;
   position: fixed;
-  bottom: env(safe-area-inset-bottom);
   left: 0;
   right: 0;
   z-index: 999;
-  padding-bottom: env(safe-area-inset-bottom);
-  bottom: constant(safe-area-inset-bottom);
-  padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 
