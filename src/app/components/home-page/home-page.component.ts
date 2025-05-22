@@ -94,19 +94,23 @@ addElement() {
       for (const res of this.appointments) {
         await this.reservationService.addReservation(res);
       }
+    setTimeout(() => {
       Swal.fire({
-  title: "Prenotazione effettuata con successo!",
-  icon: "success",
-   showCancelButton: true,
-  confirmButtonText: 'Conferma',
-  cancelButtonText: 'Annulla',
-  backdrop: true,
-  allowOutsideClick: false,
-});
-      this.appointments = [];
-      this.showAppointmentsList = false;
-    } catch {
-      alert('Errore durante la conferma delle prenotazioni.');
-    }
+        title: "Prenotazione effettuata con successo!",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonText: 'Conferma',
+        cancelButtonText: 'Annulla',
+        allowOutsideClick: false,
+        backdrop: true,
+      }).then(() => {
+
+        document.body.classList.remove('swal-open-custom');
+      });
+    }, 100);
+
+  } catch {
+    alert('Errore durante la conferma delle prenotazioni.');
+  }
   }
 }

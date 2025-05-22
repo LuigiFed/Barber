@@ -3,3 +3,8 @@ margin:0;
 padding:0;
 overflow: hidden;
 }
+/* Fix iOS touch bug con SweetAlert2 */
+body.swal-open-custom .riepilogo,
+body.swal-open-custom .riepilogo-list {
+  display: none !important;
+}
