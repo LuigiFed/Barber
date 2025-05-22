@@ -8,7 +8,7 @@ import { NavComponent } from "../nav/nav.component";
 @Component({
   selector: 'app-home-page',
    standalone: true,
-  imports: [CommonModule, RouterModule, NavComponent],
+  imports: [CommonModule, NavComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
   providers: [PrenotazioniService],
