@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { NavComponent } from "../nav/nav.component";
 
 
 import { FormsModule, NgForm } from '@angular/forms';
 @Component({
   selector: 'app-auth',
-  imports: [CommonModule, RouterModule, HttpClientModule, NavComponent, FormsModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
