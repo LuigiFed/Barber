@@ -95,15 +95,18 @@ async confirmReservations() {
       await this.reservationService.addReservation(res);
     }
 
-    Swal.fire({
-      title: "Prenotazione effettuata con successo!",
-      icon: "success",
-      showCancelButton: true,
-      confirmButtonText: 'Conferma',
-      cancelButtonText: 'Annulla',
-      allowOutsideClick: false,
-      backdrop: true,
-    }).then(() => {
+   Swal.fire({
+  title: "Prenotazione effettuata con successo!",
+  icon: "success",
+  showCancelButton: true,
+  confirmButtonText: 'Conferma',
+  cancelButtonText: 'Annulla',
+  allowOutsideClick: false,
+  backdrop: true,
+  focusConfirm: false,
+  customClass: {
+    container: 'ios-swal-container'
+  }}).then(() => {
 
     });
   } catch {

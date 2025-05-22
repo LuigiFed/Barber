@@ -2,7 +2,7 @@
 .swal2-container {
   position: fixed !important;
   inset: 0 !important;
-  z-index: 10000 !important;
+   z-index: 99999 !important;
   display: flex !important;
   justify-content: center;
   align-items: center;
@@ -10,11 +10,25 @@
   -webkit-overflow-scrolling: touch; /* per scroll fluido su iOS */
   touch-action: auto !important; /* abilita i tocchi */
 }
+@supports (-webkit-touch-callout: none) {
+  .swal2-container {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
 
+  .swal2-popup {
+    position: relative !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
 .swal2-popup {
   pointer-events: auto !important;
   touch-action: auto !important;
-  z-index: 10001 !important;
+  z-index: 100000 !important;
+}
+.ios-swal-container {
+  position: fixed !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
 /* Blocca scroll del body solo durante popup */
