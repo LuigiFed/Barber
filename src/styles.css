@@ -1,10 +1,42 @@
+
 body{
 margin:0;
 padding:0;
 overflow: hidden;
 }
-/* Fix iOS touch bug con SweetAlert2 */
-body.swal-open-custom .riepilogo,
-body.swal-open-custom .riepilogo-list {
-  display: none !important;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.my-custom-dialog button.mat-button {
+  /* Stile generale bottoni */
+  color: #bbb !important;
+  background-color: transparent !important;
+  border: 1px solid #444 !important;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.my-custom-dialog button.mat-button[color="primary"] {
+  background-color: #0f4d90 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.my-custom-dialog button.mat-button[color="primary"]:hover {
+  background-color: #0a3360 !important;
+}
+
+.my-custom-dialog button.mat-button:not([color="primary"]):hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Centrare i bottoni */
+.my-custom-dialog .mat-dialog-actions {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 20px !important;
 }

@@ -1,42 +1,3 @@
-/* SweetAlert overlay e popup sopra tutto */
-.swal2-container {
-  position: fixed !important;
-  inset: 0 !important;
-   z-index: 99999 !important;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4) !important; /* sfondo semitrasparente */
-  -webkit-overflow-scrolling: touch; /* per scroll fluido su iOS */
-  touch-action: auto !important; /* abilita i tocchi */
-}
-@supports (-webkit-touch-callout: none) {
-  .swal2-container {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  .swal2-popup {
-    position: relative !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-}
-.swal2-popup {
-  pointer-events: auto !important;
-  touch-action: auto !important;
-  z-index: 100000 !important;
-}
-.ios-swal-container {
-  position: fixed !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-
-/* Blocca scroll del body solo durante popup */
-body.swal2-shown {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-}
 
 .prenotazione {
   display: flex;
@@ -106,11 +67,11 @@ body.swal2-shown {
 }
 
 .orari-container {
-  padding: 16px;
+  padding: 26px;
   background-color: #f4f4f4;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  margin: 10px auto;
+  margin: 12px auto;
   max-width: 90%;
   text-align: center;
 }
@@ -121,8 +82,8 @@ body.swal2-shown {
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  gap: 12px;
-  padding: 10px 0;
+  gap: 13px;
+  padding: 16px 0;
   scroll-snap-type: x mandatory;
   cursor: grab;
   user-select: none;
@@ -205,7 +166,7 @@ body.swal2-shown {
   padding: 10px;
   margin-bottom: 10px;
   background-color: white;
-  border-radius: 1%;
+  border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -295,6 +256,7 @@ body.swal2-shown {
 .confirm {
   width: 50%;
   padding: 8px;
+
   border-radius: 4px;
   margin: 40px auto;
 }

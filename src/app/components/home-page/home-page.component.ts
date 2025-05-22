@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PrenotazioniService } from '../../services/prenotazioni.service';
 import Swal from 'sweetalert2';
 import { NavComponent } from "../nav/nav.component";
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-home-page',
    standalone: true,
-  imports: [CommonModule, NavComponent],
+  imports: [CommonModule, NavComponent,MatDialogModule,MatButtonModule],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css',
+  styleUrls: ['./home-page.component.css'],
   providers: [PrenotazioniService],
 })
 export class HomePageComponent {
+    @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   today = new Date();
   selectedDate: Date | null = null;
   selectedTime: string | null = null;
@@ -31,7 +34,7 @@ export class HomePageComponent {
   showAppointmentsList: boolean | undefined;
   showTimeSlots: boolean | undefined;
 
-constructor(private reservationService: PrenotazioniService) {}
+constructor(private reservationService: PrenotazioniService, private dialog: MatDialog) {}
 
   getNext7Days(): Date[] {
     const days: Date[] = [];
@@ -88,30 +91,43 @@ addElement() {
     service: null,
   };
 }
+closeDialog(result: boolean) {
+  this.dialog.closeAll();
 
-async confirmReservations() {
-  try {
-    for (const res of this.appointments) {
-      await this.reservationService.addReservation(res);
-    }
-
-   Swal.fire({
-  title: "Prenotazione effettuata con successo!",
-  icon: "success",
-  showCancelButton: true,
-  confirmButtonText: 'Conferma',
-  cancelButtonText: 'Annulla',
-  allowOutsideClick: false,
-  backdrop: true,
-  focusConfirm: false,
-  customClass: {
-    container: 'ios-swal-container'
-  }}).then(() => {
-
-    });
-  } catch {
-    alert('Errore durante la conferma delle prenotazioni.');
+  if (result) {
+    console.log('Prenotazione confermata');
+    this.appointments = [];
+    this.showAppointmentsList = false;
+  } else {
+    console.log('Prenotazione annullata');
   }
 }
 
+ async confirmReservations() {
+    if (this.appointments.length === 0) return;
+
+    try {
+      // Apri dialog
+      const dialogRef = this.dialog.open(this.confirmDialog, {
+        disableClose: true,
+        panelClass: 'my-custom-dialog'  // applica stile personalizzato
+      });
+
+      dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+        if (confirmed) {
+          // se confermi, salva le prenotazioni
+          for (const res of this.appointments) {
+            await this.reservationService.addReservation(res);
+          }
+          this.appointments = [];
+          this.showAppointmentsList = false;
+          console.log('Prenotazione confermata');
+        } else {
+          console.log('Prenotazione annullata');
+        }
+      });
+    } catch (error) {
+      alert('Errore durante la conferma delle prenotazioni.');
+    }
+  }
 }
