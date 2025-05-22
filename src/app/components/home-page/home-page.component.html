@@ -95,6 +95,8 @@
 >
   Conferma Prenotazione
 </button>
+<button
+  class="delete" (click)="showAppointmentsList = false">Annulla</button>
 </ul>
 
 
@@ -102,14 +104,23 @@
 <!-- Template inline del dialog -->
 <ng-template #confirmDialog let-dialogRef="dialogRef">
   <h2 mat-dialog-title class="pop-up-title">Conferma Prenotazione</h2>
-  <mat-dialog-content class="pop-up-content">
-    <p>Prenotazione effettuata con successo! Vuoi confermare?</p>
+  <mat-dialog-content class="pop-up-content" align="center">
+    <p>Vuoi confermare la prenotazione?</p>
   </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button (click)="dialogRef.close(false)">Annulla</button>
-    <button mat-button color="primary" (click)="dialogRef.close(true)">Conferma</button>
+  <mat-dialog-actions align="center">
+    <button mat-button  (click)="dialogRef.close(false)">Annulla</button>
+    <button mat-button  color="primary" (click)="dialogRef.close(true)">Conferma</button>
   </mat-dialog-actions>
 </ng-template>
 
+<ng-template #successDialog>
+  <h2 mat-dialog-title align="center">Prenotazione confermata</h2>
+  <mat-dialog-content>
+    <p>La tua prenotazione è stata salvata con successo.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close>OK</button>
+  </mat-dialog-actions>
+</ng-template>
 
 
