@@ -1,15 +1,28 @@
-body.swal-open-custom .riepilogo,
-body.swal-open-custom .riepilogo-list {
-  pointer-events: none !important;
-  opacity: 0.3;
-}
-body.swal-open-custom {
+/* SweetAlert overlay e popup sopra tutto */
+.swal2-container {
   position: fixed !important;
-  width: 100% !important;
-  overflow: hidden !important;
-  touch-action: none !important; /* <-- cruciale per Safari */
+  inset: 0 !important;
+  z-index: 10000 !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4) !important; /* sfondo semitrasparente */
+  -webkit-overflow-scrolling: touch; /* per scroll fluido su iOS */
+  touch-action: auto !important; /* abilita i tocchi */
 }
 
+.swal2-popup {
+  pointer-events: auto !important;
+  touch-action: auto !important;
+  z-index: 10001 !important;
+}
+
+/* Blocca scroll del body solo durante popup */
+body.swal2-shown {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+}
 
 .prenotazione {
   display: flex;
@@ -238,7 +251,7 @@ body.swal-open-custom {
   margin: 0;
   padding: 16px;
   right: 0;
-  z-index: 99;
+  z-index: 900;
 }
 
 .riepilogo-list li {

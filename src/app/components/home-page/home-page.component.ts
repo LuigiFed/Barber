@@ -89,29 +89,26 @@ addElement() {
   };
 }
 
- async confirmReservations() {
-    try {
-      for (const res of this.appointments) {
-        await this.reservationService.addReservation(res);
-      }
-    setTimeout(() => {
-      document.body.classList.add('swal-open-custom');
-      Swal.fire({
-        title: "Prenotazione effettuata con successo!",
-        icon: "success",
-        showCancelButton: true,
-        confirmButtonText: 'Conferma',
-        cancelButtonText: 'Annulla',
-        allowOutsideClick: false,
-        backdrop: true,
-      }).then(() => {
+async confirmReservations() {
+  try {
+    for (const res of this.appointments) {
+      await this.reservationService.addReservation(res);
+    }
 
-        document.body.classList.remove('swal-open-custom');
-      });
-    }, 100);
+    Swal.fire({
+      title: "Prenotazione effettuata con successo!",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonText: 'Conferma',
+      cancelButtonText: 'Annulla',
+      allowOutsideClick: false,
+      backdrop: true,
+    }).then(() => {
 
+    });
   } catch {
     alert('Errore durante la conferma delle prenotazioni.');
   }
-  }
+}
+
 }
