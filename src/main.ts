@@ -17,7 +17,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 import { firebaseConfig } from './firebase-config';
 import { PrenotazioniService } from './app/services/prenotazioni.service';
-import { provideServiceWorker } from '@angular/service-worker';
+import  { provideServiceWorker } from '@angular/service-worker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -45,6 +45,9 @@ bootstrapApplication(AppComponent, {
     }),
 
     PrenotazioniService, provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }), provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
           }),
