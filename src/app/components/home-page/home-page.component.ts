@@ -7,6 +7,7 @@ import { NavComponent } from '../nav/nav.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -18,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class HomePageComponent {
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   @ViewChild('successDialog') successDialog!: TemplateRef<any>;
+  @ViewChild('notLoggedDialog') notLoggedDialog!: TemplateRef<any>;
 
   today = new Date();
   selectedDate: Date | null = null;
@@ -56,7 +58,8 @@ export class HomePageComponent {
 
   constructor(
     private reservationService: PrenotazioniService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   getNext7Days(): Date[] {
@@ -141,8 +144,12 @@ export class HomePageComponent {
   async confirmReservations() {
     if (this.appointments.length === 0) return;
 
+    if (!this.authService.isLoggedIn()) {
+      this.dialog.open(this.notLoggedDialog); // 👈 popup per utente non loggato
+      return;
+    }
+
     try {
-      // Apri dialog
       const dialogRef = this.dialog.open(this.confirmDialog, {
         disableClose: true,
         panelClass: 'my-custom-dialog',
@@ -155,18 +162,16 @@ export class HomePageComponent {
           }
           this.appointments = [];
           this.showAppointmentsList = false;
-          this.currentAppointment = {
-            date: null,
-            time: null,
-            service: null,
-          };
+          this.currentAppointment = { date: null, time: null, service: null };
           this.selectedDate = null;
           this.selectedTime = null;
           this.selectedService = null;
+
           console.log('Prenotazione confermata');
-    this.dialog.open(this.successDialog, {
-      panelClass: 'my-custom-dialog'
-    });
+
+          this.dialog.open(this.successDialog, {
+            panelClass: 'my-custom-dialog',
+          });
         } else {
           console.log('Prenotazione annullata');
         }

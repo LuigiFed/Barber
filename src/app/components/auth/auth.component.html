@@ -1,29 +1,75 @@
-<app-nav></app-nav>
+<div class="auth-page">
+  <div class="auth-container">
+    <h1 *ngIf="mode === 'login'">Accedi</h1>
+    <h1 *ngIf="mode === 'register'">Registrati</h1>
 
-<div class="auth-container">
-  <form #loginForm="ngForm" (ngSubmit)="logIn(loginForm)">
-    <input
-      type="text"
-      name="email"
-      placeholder="Email"
-      ngModel
-      required
-    />
-    <input
-      type="password"
-      name="password"
-      placeholder="Password"
-      ngModel
-      required
-    />
-    <button class="submit" type="submit">Accedi</button>
+    <form
+      *ngIf="mode === 'login'"
+      #loginForm="ngForm"
+      (ngSubmit)="logIn(loginForm)"
+      class="auth-form"
+      novalidate
+    >
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        ngModel
+        required
+        autocomplete="email"
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        ngModel
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit" [disabled]="loginForm.invalid">Accedi</button>
+      <p class="switch-text">
+        Non hai un account?
+        <a href="#" (click)="mode = 'register'; $event.preventDefault()">Registrati</a>
+      </p>
+    </form>
 
-    <span><a href="">Iscriviti!</a></span>
-  </form>
+    <form
+      *ngIf="mode === 'register'"
+      #registerForm="ngForm"
+      (ngSubmit)="register(registerForm)"
+      class="auth-form"
+      novalidate
+    >
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        ngModel
+        required
+        autocomplete="email"
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        ngModel
+        required
+        minlength="6"
+        autocomplete="new-password"
+      />
+      <input
+        type="tel"
+        name="phone"
+        placeholder="Numero di telefono"
+        ngModel
+        required
+        pattern="^[0-9]{8,15}$"
+      />
+      <button type="submit" [disabled]="registerForm.invalid">Registrati</button>
+      <p class="switch-text">
+        Hai già un account?
+        <a href="#" (click)="mode = 'login'; $event.preventDefault()">Accedi</a>
+      </p>
+    </form>
+  </div>
 </div>
-
-
-
-<section class="riepilogo">
-  <i class="icon fa-solid fa-list-check"></i>
-</section>

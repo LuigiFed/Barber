@@ -17,18 +17,37 @@ export class AuthComponent {
   constructor( private authService: AuthService, private router: Router) {}
 
 
+ mode: 'login' | 'register' = 'login';
+loginError: string | null = null;
 
 async logIn(form: NgForm) {
+  this.loginError = null; // reset errore prima di ogni tentativo
+  if (!form.valid) return;
 
-    console.log('Form values:', form.value);
-const { email, password } = form.value;
+  const { email, password } = form.value;
   try {
     await this.authService.login(email, password);
     console.log('Login riuscito');
     this.router.navigate(['/home']);
   } catch (error: any) {
     console.error('Login fallito', error.message);
-
+    this.loginError = 'Credenziali errate o problema di connessione.';
   }
 }
+
+  async register(form: NgForm) {
+    if (!form.valid) return;
+    const { email, password } = form.value;
+    try {
+      // usa authService per registrare l’utente (devi averlo importato e iniettato)
+      await this.authService.register(email, password);
+      console.log('Registrazione riuscita');
+      // magari fai un redirect o cambia modalità dopo la registrazione
+      this.mode = 'login';
+    } catch (error: any) {
+      console.error('Errore registrazione', error.message);
+    }
+  }
+
+
 }

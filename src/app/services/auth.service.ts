@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -16,6 +17,10 @@ export class AuthService {
 
   private currentUser: User | null = null;
 
+    isLoggedIn(): boolean {
+
+    return !!localStorage.getItem('userToken');
+  }
   login(email: string, password: string) {
     const auth = getAuth(app);
     return signInWithEmailAndPassword(auth, email, password);
@@ -25,6 +30,10 @@ export class AuthService {
   const auth = getAuth(app);
   return onAuthStateChanged(auth, callback);
 }
+  register(email: string, password: string) {
+    const auth = getAuth(app);
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
 
 getUser() {
   return this.currentUser;

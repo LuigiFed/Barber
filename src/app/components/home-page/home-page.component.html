@@ -115,7 +115,7 @@
 
 <ng-template #successDialog>
   <h2 mat-dialog-title align="center">Prenotazione confermata</h2>
-  <mat-dialog-content>
+  <mat-dialog-content align="center">
     <p>La tua prenotazione è stata salvata con successo.</p>
   </mat-dialog-content>
   <mat-dialog-actions align="center">
@@ -123,4 +123,13 @@
   </mat-dialog-actions>
 </ng-template>
 
+<ng-template #notLoggedDialog>
+  <h2 mat-dialog-title>Non sei loggato</h2>
+  <mat-dialog-content>
+    <p>Effettua il login per poter prenotare.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>OK</button>
+  </mat-dialog-actions>
+</ng-template>
 
