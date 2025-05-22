@@ -124,16 +124,7 @@
 
 /*#endregion FORM*/
 
-.riepilogo {
-  height: 50px;
-  background-color: #0e2431;
-  border: 1px solid black;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 999;
-}
+
 
 .icon {
   display: flex;
@@ -211,6 +202,21 @@
   font-size: 16px;
   padding: 6px;
 }
+
+.riepilogo {
+  height: 50px;
+  background-color: #0e2431;
+  border: 1px solid black;
+  position: fixed;
+  bottom: env(safe-area-inset-bottom);
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding-bottom: env(safe-area-inset-bottom);
+  bottom: constant(safe-area-inset-bottom);
+  padding-bottom: constant(safe-area-inset-bottom);
+}
+
 
 .riepilogo-list {
   display: flex;
