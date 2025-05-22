@@ -6,7 +6,7 @@ import {
 import { AppComponent } from './app/app.component';
 import localeIt from '@angular/common/locales/it';
 import { registerLocaleData } from '@angular/common';
-import { importProvidersFrom, LOCALE_ID } from '@angular/core';
+import { importProvidersFrom, LOCALE_ID, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 import { firebaseConfig } from './firebase-config';
 import { PrenotazioniService } from './app/services/prenotazioni.service';
+import { provideServiceWorker } from '@angular/service-worker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -43,7 +44,10 @@ bootstrapApplication(AppComponent, {
       throw new Error('Analytics is only available in browser environment');
     }),
 
-    PrenotazioniService,
+    PrenotazioniService, provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 });
 registerLocaleData(localeIt);
