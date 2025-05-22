@@ -96,7 +96,12 @@ addElement() {
       }
       Swal.fire({
   title: "Prenotazione effettuata con successo!",
-  icon: "success"
+  icon: "success",
+   showCancelButton: true,
+  confirmButtonText: 'Conferma',
+  cancelButtonText: 'Annulla',
+  backdrop: true,
+  allowOutsideClick: false,
 });
       this.appointments = [];
       this.showAppointmentsList = false;
