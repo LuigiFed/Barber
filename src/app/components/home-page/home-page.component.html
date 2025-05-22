@@ -61,6 +61,7 @@
     class="time-slot"
     *ngFor="let t of getAvailableTimeSlots()"
     (click)="selectTime(t)"
+     [class.selected]="isSelectedTime(t)"
     tabindex="0"
   >
     {{ t }}

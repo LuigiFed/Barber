@@ -109,6 +109,9 @@ async selectDate(date: Date) {
   isSelected(date: Date): boolean {
     return this.selectedDate?.toDateString() === date.toDateString();
   }
+  isSelectedTime(t: string): boolean {
+  return this.selectedTime === t;
+}
 
   selectTime(time: string) {
     if (this.selectedTime === time) {
