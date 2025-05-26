@@ -31,19 +31,18 @@ async logIn(form: NgForm) {
 }
 
 
-  async register(form: NgForm) {
-    if (!form.valid) return;
-    const { email, password } = form.value;
-    try {
-      // usa authService per registrare l’utente (devi averlo importato e iniettato)
-      await this.authService.register(email, password);
-      console.log('Registrazione riuscita');
-      // magari fai un redirect o cambia modalità dopo la registrazione
-      this.mode = 'login';
-    } catch (error: any) {
-      console.error('Errore registrazione', error.message);
-    }
+async register(form: NgForm) {
+  if (!form.valid) return;
+  const { email, password, name, surname, phone } = form.value;
+  try {
+    await this.authService.register(email, password, name, surname, phone);
+    console.log('Registrazione riuscita');
+    this.mode = 'login';
+  } catch (error: any) {
+    console.error('Errore registrazione', error.message);
   }
+}
+
 
 
 }

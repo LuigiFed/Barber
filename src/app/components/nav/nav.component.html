@@ -1,15 +1,20 @@
 <nav>
   <div class="navbar">
     <div class="container nav-container">
-      <input class="checkbox" type="checkbox" name="" id="" />
+      <input class="checkbox" type="checkbox" id="menu-toggle" />
       <div class="hamburger-lines">
         <span class="line line1"></span>
         <span class="line line2"></span>
         <span class="line line3"></span>
       </div>
-      <div class="user" >
-      <i class="fa-regular fa-user"></i>
-    </div>
+
+      <div class="user-container">
+        <div *ngIf="logged && userName" class="user-logged">
+          <span class="welcome-msg">Benvenuto, {{ userName }}!</span>
+          <i class="fa-regular fa-user"></i>
+        </div>
+      </div>
+
       <div class="menu-items">
         <li><a href="#">Home</a></li>
         <li><a href="#">Chi siamo</a></li>

@@ -8,6 +8,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
+import { getAuth } from 'firebase/auth';
+import { app } from '../../../firebase-config';
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -49,7 +51,7 @@ export class HomePageComponent {
   currentAppointment = {
     date: null as Date | null,
     time: null as string | null,
-    service: null as string | null,
+    service: null as string | null
   };
 bookedTimeSlots: string[] = [];
   appointments: { date: Date; time: string; service: string }[] = [];
@@ -133,7 +135,7 @@ async selectDate(date: Date) {
     }
   }
 addElement() {
-  const { date, time, service } = this.currentAppointment;
+  const { date, time, service} = this.currentAppointment;
 
   if (!date || !time || !service) {
     return;
@@ -141,11 +143,16 @@ addElement() {
 
 
   if (this.appointments.length > 0) {
-    this.appointments[0] = { date, time, service };
+    this.appointments[0] = { date, time, service};
   } else {
-    this.appointments.push({ date, time, service });
+    this.appointments.push({ date, time, service});
   }
 
+  localStorage.setItem("currentAppointment", JSON.stringify({
+    date,
+    time,
+    service
+  }));
 
   if (!this.bookedTimeSlots.includes(time)) {
     this.bookedTimeSlots.push(time);
@@ -156,7 +163,7 @@ addElement() {
   this.currentAppointment = {
     date: null,
     time: null,
-    service: null,
+    service: null
   };
 }
 
@@ -172,43 +179,66 @@ addElement() {
     }
   }
 
-  async confirmReservations() {
-    if (this.appointments.length === 0) return;
+ async confirmReservations() {
+  if (this.appointments.length === 0) return;
 
-    if (!this.authService.isLoggedIn()) {
-      this.dialog.open(this.notLoggedDialog); // 👈 popup per utente non loggato
-      return;
-    }
+  if (!this.authService.isLoggedIn()) {
+    this.dialog.open(this.notLoggedDialog);
+    return;
+  }
 
-    try {
-      const dialogRef = this.dialog.open(this.confirmDialog, {
-        disableClose: true,
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  if (!user) {
+    this.dialog.open(this.notLoggedDialog);
+    return;
+  }
+
+  // Recupera i dati dell’utente
+  const userData = await this.authService.getUserData(user.uid);
+
+  if (!userData) {
+    console.error('Dati utente non trovati');
+    return;
+  }
+
+  const dialogRef = this.dialog.open(this.confirmDialog, {
+    disableClose: true,
+    panelClass: 'my-custom-dialog',
+  });
+
+  dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+    if (confirmed) {
+      for (const res of this.appointments) {
+        // Aggiungi anche i dati utente alla prenotazione
+        const reservationWithUser = {
+          ...res,
+          name: userData['name'],
+          surname: userData['surname'],
+          phone: userData['phone'],
+          userId: user.uid // se vuoi tener traccia dell’utente
+        };
+
+        await this.reservationService.addReservation(reservationWithUser);
+      }
+
+      this.appointments = [];
+      this.showAppointmentsList = false;
+      this.currentAppointment = { date: null, time: null, service: null };
+      this.selectedDate = null;
+      this.selectedTime = null;
+      this.selectedService = null;
+
+      console.log('Prenotazione confermata');
+
+      this.dialog.open(this.successDialog, {
         panelClass: 'my-custom-dialog',
       });
-
-      dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
-        if (confirmed) {
-          for (const res of this.appointments) {
-            await this.reservationService.addReservation(res);
-          }
-          this.appointments = [];
-          this.showAppointmentsList = false;
-          this.currentAppointment = { date: null, time: null, service: null };
-          this.selectedDate = null;
-          this.selectedTime = null;
-          this.selectedService = null;
-
-          console.log('Prenotazione confermata');
-
-          this.dialog.open(this.successDialog, {
-            panelClass: 'my-custom-dialog',
-          });
-        } else {
-          console.log('Prenotazione annullata');
-        }
-      });
-    } catch (error) {
-      alert('Errore durante la conferma delle prenotazioni.');
+    } else {
+      console.log('Prenotazione annullata');
     }
-  }
+  });
+}
+
 }

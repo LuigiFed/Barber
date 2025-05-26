@@ -29,7 +29,9 @@
       <button type="submit" [disabled]="loginForm.invalid">Accedi</button>
       <p class="switch-text">
         Non hai un account?
-        <a href="#" (click)="mode = 'register'; $event.preventDefault()">Registrati</a>
+        <a href="#" (click)="mode = 'register'; $event.preventDefault()"
+          >Registrati</a
+        >
       </p>
     </form>
 
@@ -40,14 +42,8 @@
       class="auth-form"
       novalidate
     >
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        ngModel
-        required
-        autocomplete="email"
-      />
+      <input type="name" name="name" placeholder="Nome" ngModel required />
+        <input type="surname" name="surname" placeholder="Cognome" ngModel required />
       <input
         type="password"
         name="password"
@@ -58,6 +54,14 @@
         autocomplete="new-password"
       />
       <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        ngModel
+        required
+        autocomplete="email"
+      />
+      <input
         type="tel"
         name="phone"
         placeholder="Numero di telefono"
@@ -65,7 +69,9 @@
         required
         pattern="^[0-9]{8,15}$"
       />
-      <button type="submit" [disabled]="registerForm.invalid">Registrati</button>
+      <button type="submit" [disabled]="registerForm.invalid">
+        Registrati
+      </button>
       <p class="switch-text">
         Hai già un account?
         <a href="#" (click)="mode = 'login'; $event.preventDefault()">Accedi</a>
