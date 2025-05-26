@@ -1,13 +1,11 @@
+/* --- STILI BASE --- */
 .prenotazione {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* meglio usare min-height invece di height per adattarsi meglio su iPhone */
   min-height: 50vh;
-  /* se serve altezza fissa, poi gestisci con media query */
 }
 
-/* FORM */
 .carousel-wrapper {
   display: flex;
   overflow-x: auto;
@@ -31,19 +29,19 @@
 }
 
 .carousel-wrapper {
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .card {
   flex-shrink: 0;
   min-width: 80px;
-  height: 80px;
+  min-height: 80px;
+  height: auto;
   scroll-snap-align: start;
   background-color: white;
   color: #0e2431;
   border-radius: 8px;
   text-align: center;
-  -webkit-overflow-scrolling: touch;
   padding: 10px;
   margin: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -52,12 +50,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .card p {
   margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .orari-container {
@@ -70,7 +68,6 @@
   text-align: center;
 }
 
-/* scroll orizzontale per time grid */
 .time-grid-scroll {
   display: flex;
   flex-wrap: nowrap;
@@ -106,7 +103,7 @@
   font-weight: 500;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .time-slot.disabled {
@@ -130,7 +127,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  /* attenzione a doppio height */
   margin-top: 30px;
   height: auto;
   min-height: 15vh;
@@ -141,8 +137,10 @@
 }
 
 .servizio img {
-  height: 80px;
-  width: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  width: 20vw;
+  height: auto;
   padding: 10px;
   margin-bottom: 10px;
   background-color: white;
@@ -152,17 +150,15 @@
   cursor: pointer;
 }
 
-/* qui risolvo problema ::before e altezza */
-
+/* --- DESCRIZIONE --- */
 .descrizione {
-  position: relative; /* fondamentale per ::before */
+  position: relative;
   margin: 0 auto;
   z-index: 1;
-  /* usa min-height e padding per far espandere */
   min-height: 30vh;
-  padding: 20px 10px; /* spazio dentro */
+  padding: 20px 10px;
   text-align: center;
-  box-sizing: border-box; /* meglio sempre */
+  box-sizing: border-box;
 }
 
 .descrizione::before {
@@ -177,13 +173,13 @@
   width: 100%;
   height: 100%;
   z-index: -1;
-  pointer-events: none; /* evita problemi tocchi */
+  pointer-events: none;
 }
 
 .descrizione h2 {
   color: white;
   text-align: center;
-  font-size: 24px;
+  font-size: 1.5rem;
   padding: 10px 5px;
   margin: 0 0 10px 0;
 }
@@ -191,17 +187,16 @@
 .descrizione p {
   color: white;
   text-align: center;
-  font-size: 16px;
-  /* meglio padding verticale più contenuto */
+  font-size: 1rem;
   padding: 10px 10px 0 10px;
   margin: 0;
-  word-wrap: break-word; /* evita overflow */
+  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-/* Riepilogo */
+/* --- RIEPILOGO --- */
 .riepilogo {
-  height: 60px;
+  height: 65px;
   background-color: #0e2431;
   position: fixed;
   left: 0;
@@ -211,22 +206,24 @@
 }
 
 .riepilogo-list {
+  position: fixed;
+  top: 30px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 77vh;
-  background-color: #0e2431f4;
+  justify-content: flex-start;
+  background-color: rgba(14, 36, 49, 0.95);
   border: 1px solid black;
-  position: fixed;
-  bottom: 14.5vh;
-  left: 0;
-  margin: 0;
+  overflow-y: auto;
   padding: 16px;
-  right: 0;
   z-index: 900;
+  box-sizing: border-box;
 }
 
+/* voci della lista */
 .riepilogo-list li {
   color: white;
   border: 1px solid white;
@@ -244,25 +241,18 @@
 
 .riepilogo-list li p {
   color: white;
-  display: flex;
-  flex-direction: column;
   text-align: center;
-  list-style: none;
   font-size: 14px;
+  margin: 0;
 }
 
-.confirm {
-  width: 50%;
-  padding: 8px;
-  border-radius: 4px;
-  margin: 40px auto;
-}
 
+.confirm,
 .delete {
   width: 50%;
   padding: 8px;
   border-radius: 4px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .servizio img:active,
@@ -273,17 +263,129 @@
   transform: scale(0.97);
 }
 
-.card.selected {
-  border: 1px solid navy;
-  transform: scale(0.97);
-}
-
-.servizio.selected img {
-  border: 1px solid navy;
-  transform: scale(0.97);
-}
-
+.card.selected,
+.servizio.selected img,
 .time-slot.selected {
   border: 1px solid navy;
   transform: scale(0.97);
+}
+
+/* --- MEDIA QUERIES OTTIMIZZATE --- */
+
+/* Base: fino a 320px (iPhone SE, telefoni molto piccoli) */
+@media (max-width: 320px) {
+  .descrizione h2 {
+    font-size: 1.2rem;
+  }
+  .descrizione p {
+    font-size: 0.9rem;
+  }
+  .card {
+    font-size: 0.85rem;
+  }
+  .time-slot {
+    font-size: 0.8rem;
+  }
+  .riepilogo-list li {
+    font-size: 0.85rem;
+    padding: 1.5vh 2vw;
+  }
+  .riepilogo-list {
+    height: 80vh;
+    padding: 2vh 3vw;
+  }
+}
+
+/* Fino a 390px (iPhone 12 mini, 13 mini, modelli compatti) */
+@media (min-width: 321px) and (max-width: 390px) {
+  .descrizione h2 {
+    font-size: 1.4rem;
+  }
+  .descrizione p {
+    font-size: 1rem;
+  }
+  .card {
+    font-size: 0.9rem;
+  }
+  .time-slot {
+    font-size: 0.85rem;
+  }
+  .riepilogo-list li {
+    font-size: 0.9rem;
+    padding: 2vh 3vw;
+  }
+  .riepilogo-list {
+    height: 81vh;
+    padding: 3vh 4vw;
+  }
+}
+
+/* Fino a 414px (iPhone XR, 11, 12/13/14 Pro Max) */
+@media (min-width: 391px) and (max-width: 414px) {
+  .descrizione h2 {
+    font-size: 1.5rem;
+  }
+  .descrizione p {
+    font-size: 1.1rem;
+  }
+  .card {
+    font-size: 1rem;
+  }
+  .time-slot {
+    font-size: 0.9rem;
+  }
+  .riepilogo-list li {
+    font-size: 1rem;
+    padding: 3vh 4vw;
+  }
+  .riepilogo-list {
+    height: 82vh;
+    padding: 3vh 5vw;
+  }
+}
+
+/* Fino a 430px (iPhone 14 Pro e simili, plus max) */
+@media (min-width: 415px) and (max-width: 430px) {
+  .descrizione h2 {
+    font-size: 1.6rem;
+  }
+  .descrizione p {
+    font-size: 1.15rem;
+  }
+  .card {
+    font-size: 1.05rem;
+  }
+  .time-slot {
+    font-size: 0.95rem;
+  }
+  .riepilogo-list li {
+    font-size: 1.05rem;
+    padding: 3.5vh 5vw;
+  }
+  .riepilogo-list {
+    height: 83vh;
+    padding: 4vh 6vw;
+  }
+}
+@media (min-width: 321px) and (max-width: 380px) {
+  .descrizione h2 {
+    font-size: 1.35rem;
+  }
+  .descrizione p {
+    font-size: 0.95rem;
+  }
+  .card {
+    font-size: 0.88rem;
+  }
+  .time-slot {
+    font-size: 0.82rem;
+  }
+  .riepilogo-list li {
+    font-size: 0.88rem;
+    padding: 1.8vh 2.5vw;
+  }
+  .riepilogo-list {
+    height: 90vh;
+    padding: 2.5vh 3.5vw;
+  }
 }
