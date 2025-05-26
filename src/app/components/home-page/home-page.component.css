@@ -2,11 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 50vh;
+  /* meglio usare min-height invece di height per adattarsi meglio su iPhone */
+  min-height: 50vh;
+  /* se serve altezza fissa, poi gestisci con media query */
 }
 
-/*#region FORM*/
-
+/* FORM */
 .carousel-wrapper {
   display: flex;
   overflow-x: auto;
@@ -59,9 +60,6 @@
   font-size: 16px;
 }
 
-
-
-
 .orari-container {
   padding: 26px;
   background-color: #f4f4f4;
@@ -72,6 +70,7 @@
   text-align: center;
 }
 
+/* scroll orizzontale per time grid */
 .time-grid-scroll {
   display: flex;
   flex-wrap: nowrap;
@@ -109,6 +108,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   font-size: 14px;
 }
+
 .time-slot.disabled {
   color: gray;
   pointer-events: none;
@@ -130,9 +130,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: auto;
+  /* attenzione a doppio height */
   margin-top: 30px;
-  height: 15vh;
+  height: auto;
+  min-height: 15vh;
 }
 
 .servizio {
@@ -151,14 +152,17 @@
   cursor: pointer;
 }
 
-
+/* qui risolvo problema ::before e altezza */
 
 .descrizione {
-  position: relative;
-  margin: 0;
+  position: relative; /* fondamentale per ::before */
+  margin: 0 auto;
   z-index: 1;
-  height: 30vh;
+  /* usa min-height e padding per far espandere */
+  min-height: 30vh;
+  padding: 20px 10px; /* spazio dentro */
   text-align: center;
+  box-sizing: border-box; /* meglio sempre */
 }
 
 .descrizione::before {
@@ -173,24 +177,29 @@
   width: 100%;
   height: 100%;
   z-index: -1;
+  pointer-events: none; /* evita problemi tocchi */
 }
 
 .descrizione h2 {
   color: white;
   text-align: center;
   font-size: 24px;
-  padding: 10px;
-  margin: 0;
+  padding: 10px 5px;
+  margin: 0 0 10px 0;
 }
 
 .descrizione p {
   color: white;
   text-align: center;
   font-size: 16px;
-  padding: 20px;
-
+  /* meglio padding verticale più contenuto */
+  padding: 10px 10px 0 10px;
+  margin: 0;
+  word-wrap: break-word; /* evita overflow */
+  overflow-wrap: break-word;
 }
 
+/* Riepilogo */
 .riepilogo {
   height: 60px;
   background-color: #0e2431;
@@ -206,11 +215,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 85vh;
+  height: 77vh;
   background-color: #0e2431f4;
   border: 1px solid black;
   position: fixed;
-  bottom: 6.5vh;
+  bottom: 14.5vh;
   left: 0;
   margin: 0;
   padding: 16px;
@@ -248,12 +257,14 @@
   border-radius: 4px;
   margin: 40px auto;
 }
+
 .delete {
   width: 50%;
   padding: 8px;
   border-radius: 4px;
   margin: 0 auto;
 }
+
 .servizio img:active,
 .card:active,
 .time-slot:active {
@@ -261,15 +272,18 @@
   font-weight: bold;
   transform: scale(0.97);
 }
+
 .card.selected {
   border: 1px solid navy;
   transform: scale(0.97);
 }
+
 .servizio.selected img {
   border: 1px solid navy;
   transform: scale(0.97);
 }
+
 .time-slot.selected {
-  border: 1px solid navy ;
+  border: 1px solid navy;
   transform: scale(0.97);
 }
