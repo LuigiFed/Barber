@@ -752,57 +752,6 @@ body {
   }
 }
 
-/* Landscape orientation adjustments */
-@media (orientation: landscape) and (max-height: 500px) {
-  .descrizione {
-    min-height: 15vh;
-    padding: 12px 8px;
-  }
-
-  .descrizione h2 {
-    font-size: 16px;
-    margin-bottom: 4px;
-  }
-
-  .descrizione p {
-    font-size: 12px;
-  }
-
-  .navbar {
-    height: 45px;
-  }
-
-  .menu-items {
-    top: 45px;
-    bottom: 40px;
-  }
-
-  .menu-items a {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  .user-container i {
-    font-size: 18px;
-  }
-
-  .welcome-msg {
-    font-size: 11px;
-  }
-
-  .riepilogo-list {
-    height: calc(100vh - 85px);
-    top: 45px;
-  }
-
-  .riepilogo {
-    height: 40px;
-  }
-
-  .icon {
-    font-size: 20px;
-  }
-}
 
 /* High DPI displays */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
@@ -819,25 +768,6 @@ body {
   }
 }
 
-/* Focus states for keyboard navigation */
-.card:focus,
-.servizio:focus,
-.time-slot:focus,
-.icon:focus {
-  outline: 2px solid #0066cc;
-  outline-offset: 2px;
-}
 
-/* Safe area adjustments for devices with notches */
-@supports (padding: max(0px)) {
-  .riepilogo {
-    padding-left: max(8px, env(safe-area-inset-left));
-    padding-right: max(8px, env(safe-area-inset-right));
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
-  }
 
-  .riepilogo-list {
-    padding-left: max(16px, env(safe-area-inset-left));
-    padding-right: max(16px, env(safe-area-inset-right));
-  }
-}
+
