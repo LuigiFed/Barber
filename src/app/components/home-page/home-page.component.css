@@ -559,6 +559,8 @@ body {
 @media (min-width: 430px) and (max-width: 767px) {
   .descrizione h2 {
     font-size: 18px;
+    padding: 8px 16px;
+    margin: 2px
   }
 
   .descrizione p {
