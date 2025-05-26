@@ -1,23 +1,44 @@
-/* Adjust body padding to account for fixed navbar */
+/* Global */
 body {
   padding-top: 50px;
 }
-.prenotazione {
+.prenotazione,
+.servizi,
+.riepilogo-list li {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.prenotazione {
   min-height: 50vh;
   padding: 0 8px;
 }
+.servizi {
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 0 8px;
+  flex-wrap: wrap;
+}
+.riepilogo-list li {
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  padding: 12px;
+  margin-bottom: 8px;
+  max-width: 300px;
+  box-sizing: border-box;
+}
 
-/*#region FORM*/
-
-.carousel-wrapper {
+.carousel-wrapper,
+.time-grid-scroll {
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
   gap: 8px;
-  margin: 8px 0;
   padding: 12px 8px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -25,99 +46,53 @@ body {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-
-.carousel-wrapper:active {
+.carousel-wrapper::-webkit-scrollbar,
+.time-grid-scroll::-webkit-scrollbar {
+  display: none;
+}
+.carousel-wrapper:active,
+.time-grid-scroll:active {
   cursor: grabbing;
 }
 
-.carousel-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-.carousel-wrapper {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-}
-
-.card {
+.card,
+.time-slot {
   flex-shrink: 0;
-  min-width: 60px;
-  height: 60px;
   scroll-snap-align: start;
+  border-radius: 8px;
   background-color: white;
   color: #0e2431;
-  border-radius: 8px;
-  text-align: center;
-  -webkit-overflow-scrolling: touch;
-  padding: 6px;
-  margin: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-in-out;
   user-select: none;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease-in-out;
+  font-size: 12px;
+}
+.card {
+  min-width: 60px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 12px;
-  border: 2px solid transparent;
+  padding: 6px;
+  margin: 0;
 }
-
 .card p {
   margin: 0;
   font-size: inherit;
   line-height: 1.2;
 }
-
-.orari-container {
-  padding: 16px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  margin: 8px;
-  width: calc(100% - 16px);
-  max-width: 100%;
-  text-align: center;
-  box-sizing: border-box;
-}
-
-.time-grid-scroll {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  gap: 8px;
-  padding: 12px 4px;
-  scroll-snap-type: x mandatory;
-  cursor: grab;
-  user-select: none;
-  white-space: nowrap;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.time-grid-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.time-grid-scroll {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 .time-slot {
   flex: 0 0 auto;
-  scroll-snap-align: center;
   padding: 8px 12px;
   border-radius: 999px;
-  background-color: white;
-  color: #0e2431;
   font-weight: 500;
-  cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-size: 12px;
-  border: 2px solid transparent;
-  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .time-slot.disabled {
@@ -126,50 +101,27 @@ body {
   opacity: 0.5;
 }
 
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  padding: 8px;
-  color: white;
-  cursor: pointer;
-}
-
-.servizi {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 16px 0;
-  padding: 0 8px;
-  flex-wrap: wrap;
-}
-
 .servizio {
   padding: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .servizio img {
   height: 60px;
   width: 60px;
   padding: 8px;
   margin-bottom: 4px;
-  background-color: white;
+  background: white;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-in-out;
   cursor: pointer;
   border: 2px solid transparent;
+  transition: transform 0.2s ease-in-out;
 }
 
 .descrizione {
   position: relative;
-  margin: 0;
   z-index: 1;
   min-height: 30vh;
   text-align: center;
@@ -178,12 +130,9 @@ body {
   justify-content: center;
   padding: 16px 8px;
 }
-
 .descrizione::before {
   content: "";
-  background-image: url("/background.jpg");
-  background-size: cover;
-  background-position: center;
+  background: url("/background.jpg") center/cover;
   opacity: 0.8;
   position: absolute;
   top: 0;
@@ -192,22 +141,21 @@ body {
   height: 100%;
   z-index: -1;
 }
-
-.descrizione h2 {
-  color: white;
-  text-align: center;
-  font-size: 18px;
-  padding: 8px;
-  margin: 0 0 8px 0;
-  line-height: 1.3;
-}
-
+.descrizione h2,
 .descrizione p {
   color: white;
   text-align: center;
+  margin: 0;
+}
+.descrizione h2 {
+  font-size: 18px;
+  padding: 8px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.descrizione p {
   font-size: 14px;
   padding: 8px;
-  margin: 0;
   line-height: 1.4;
 }
 
@@ -271,6 +219,9 @@ body {
   margin: 2px 0;
   line-height: 1.3;
 }
+.riepilogo i {
+  color: white;
+}
 
 .confirm, .delete {
   width: 80%;
@@ -283,7 +234,11 @@ body {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-
+.confirm:hover,
+.delete:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
 .confirm {
   background-color: #28a745;
   color: white;
@@ -294,482 +249,131 @@ body {
   color: white;
 }
 
-.confirm:hover, .delete:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* Selected states */
 .servizio img:active,
 .card:active,
 .time-slot:active {
   transform: scale(0.95);
 }
-
-.card.selected {
-  border-color: #0e2431;
-  background-color: #f0f8ff;
-  transform: scale(0.98);
-}
-
-.servizio.selected img {
-  border-color: #0e2431;
-  background-color: #f0f8ff;
-  transform: scale(0.98);
-}
-
+.card.selected,
+.servizio.selected img,
 .time-slot.selected {
   border-color: #0e2431;
-  background-color: #f0f8ff;
+  background: #f0f8ff;
   transform: scale(0.98);
 }
 
-/* Responsive breakpoints */
-
-/* Small phones - 320px to 374px */
+/* Small phones */
 @media (max-width: 374px) {
   .descrizione h2 {
     font-size: 16px;
   }
-
   .descrizione p {
     font-size: 12px;
   }
-
-  .card {
+  .card,
+  .servizio img {
     min-width: 50px;
     height: 50px;
+  }
+  .card {
     font-size: 10px;
   }
-
-  .servizio img {
-    width: 50px;
-    height: 50px;
-  }
-
   .time-slot {
     font-size: 11px;
     padding: 6px 10px;
   }
-
   .icon {
     font-size: 20px;
   }
-
   .navbar {
     height: 45px;
   }
-
   .nav-container {
     padding: 0 8px;
   }
-
   .nav-container .checkbox {
     height: 28px;
     width: 28px;
     left: 8px;
   }
-
   .nav-container .hamburger-lines {
     width: 18px;
     height: 16px;
     left: 8px;
   }
-
   .hamburger-lines .line {
     height: 2px;
   }
-
   .menu-items {
     top: 45px;
     bottom: 50px;
     padding: 16px 12px;
   }
-
   .menu-items a {
     font-size: 14px;
     padding: 10px 12px;
   }
-
   .user-container i {
     font-size: 18px;
   }
-
   .welcome-msg {
     font-size: 11px;
     max-width: 80px;
   }
-
   .riepilogo-list {
     top: 45px;
     height: calc(100vh - 95px);
     padding: 12px;
   }
-
   .riepilogo {
     height: 50px;
   }
 }
-
-/* iPhone SE and similar - 375px */
 @media (min-width: 375px) and (max-width: 389px) {
   .descrizione h2 {
     font-size: 17px;
   }
-
   .descrizione p {
     font-size: 13px;
   }
-
-  .card {
+  .card,
+  .servizio img {
     min-width: 55px;
     height: 55px;
+  }
+  .card {
     font-size: 11px;
   }
-
-  .servizio img {
-    width: 55px;
-    height: 55px;
-  }
-
   .time-slot {
     font-size: 12px;
   }
-
   .navbar {
     height: 48px;
   }
-
   .nav-container .checkbox {
     height: 30px;
     width: 30px;
     left: 10px;
   }
-
   .nav-container .hamburger-lines {
     width: 20px;
     height: 17px;
     left: 10px;
   }
-
   .menu-items {
     top: 48px;
     bottom: 55px;
   }
-
   .menu-items a {
     font-size: 15px;
   }
-
   .user-container i {
     font-size: 19px;
   }
-
   .welcome-msg {
     font-size: 12px;
     max-width: 90px;
   }
-
-  .riepilogo-list {
-    top: 48px;
-    height: calc(100vh - 103px);
-  }
-
-  .riepilogo {
-    height: 55px;
-  }
 }
 
-/* iPhone 12, 13, 14, 15 - 390px to 429px */
-@media (min-width: 390px) and (max-width: 429px) {
-  .descrizione h2 {
-    font-size: 18px;
-  }
-
-  .descrizione p {
-    font-size: 14px;
-  }
-
-  .card {
-    min-width: 65px;
-    height: 65px;
-    font-size: 12px;
-  }
-
-  .servizio img {
-    width: 65px;
-    height: 65px;
-  }
-
-  .time-slot {
-    font-size: 13px;
-    padding: 8px 14px;
-  }
-
-  .navbar {
-    height: 55px;
-  }
-
-  .nav-container {
-    padding: 0 16px;
-  }
-
-  .nav-container .checkbox {
-    height: 36px;
-    width: 36px;
-    left: 16px;
-  }
-
-  .nav-container .hamburger-lines {
-    width: 26px;
-    height: 20px;
-    left: 16px;
-  }
-
-  .hamburger-lines .line {
-    height: 3px;
-  }
-
-  .menu-items {
-    top: 55px;
-    padding: 24px 16px;
-  }
-
-  .menu-items a {
-    font-size: 17px;
-    padding: 14px 18px;
-  }
-
-  .user-container i {
-    font-size: 24px;
-  }
-
-  .welcome-msg {
-    font-size: 14px;
-    max-width: 140px;
-  }
-
-  .riepilogo-list {
-    top: 55px;
-    height: calc(100vh - 115px);
-  }
-}
-
-/* iPhone Pro Max and similar - 430px and above */
-@media (min-width: 430px) and (max-width: 767px) {
-  .descrizione h2 {
-    font-size: 18px;
-    padding: 8px 16px;
-    margin: 2px
-  }
-
-  .descrizione p {
-    font-size: 14px;
-  }
-
-  .card {
-    min-width: 70px;
-    height: 70px;
-    font-size: 13px;
-  }
-
-  .servizio img {
-    width: 70px;
-    height: 70px;
-  }
-
-  .time-slot {
-    font-size: 14px;
-    padding: 10px 16px;
-  }
-
-  .icon {
-    font-size: 26px;
-  }
-}
-
-/* Tablets - 768px and up */
-@media (min-width: 768px) {
-  .prenotazione {
-    padding: 0 16px;
-  }
-
-  .descrizione {
-    min-height: 25vh;
-    padding: 24px 16px;
-  }
-
-  .descrizione h2 {
-    font-size: 24px;
-    margin-bottom: 16px;
-  }
-
-  .descrizione p {
-    font-size: 16px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .carousel-wrapper {
-    padding: 16px;
-    gap: 12px;
-    justify-content: center;
-  }
-
-  .card {
-    min-width: 80px;
-    height: 80px;
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .servizi {
-    gap: 16px;
-    margin: 24px 0;
-  }
-
-  .servizio img {
-    width: 80px;
-    height: 80px;
-    padding: 10px;
-  }
-
-  .time-slot {
-    font-size: 15px;
-    padding: 12px 20px;
-  }
-
-  .icon {
-    font-size: 30px;
-  }
-
-  .navbar {
-    height: 60px;
-  }
-
-  .nav-container {
-    padding: 0 20px;
-  }
-
-  .nav-container .checkbox {
-    height: 40px;
-    width: 40px;
-    left: 20px;
-  }
-
-  .nav-container .hamburger-lines {
-    width: 28px;
-    height: 22px;
-    left: 20px;
-  }
-
-  .hamburger-lines .line {
-    height: 4px;
-  }
-
-  .menu-items {
-    top: 60px;
-    padding: 32px 20px;
-  }
-
-  .menu-items li {
-    margin-bottom: 16px;
-  }
-
-  .menu-items a {
-    font-size: 18px;
-    padding: 16px 20px;
-  }
-
-  .user-container {
-    gap: 12px;
-  }
-
-  .user-container i {
-    font-size: 26px;
-  }
-
-  .welcome-msg {
-    font-size: 15px;
-    max-width: 180px;
-  }
-
-  .riepilogo-list {
-    max-width: 500px;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    border-radius: 12px;
-    top: 60px;
-    height: calc(100vh - 120px);
-  }
-
-  .riepilogo-list li {
-    font-size: 15px;
-    padding: 16px;
-    margin-bottom: 12px;
-  }
-
-  .riepilogo-list li p {
-    font-size: 14px;
-  }
-}
-
-/* Large tablets and small desktops */
-@media (min-width: 1024px) {
-  .prenotazione {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .descrizione {
-    min-height: 30vh;
-  }
-
-  .descrizione h2 {
-    font-size: 28px;
-  }
-
-  .descrizione p {
-    font-size: 18px;
-  }
-
-  .servizi {
-    gap: 24px;
-  }
-
-  .servizio img {
-    width: 100px;
-    height: 100px;
-  }
-
-  .card {
-    min-width: 90px;
-    height: 90px;
-    font-size: 15px;
-  }
-
-  .time-slot {
-    font-size: 16px;
-  }
-}
-
-
-/* High DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .card, .servizio img, .time-slot {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
-
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-  .card, .servizio img, .time-slot, .confirm, .delete {
-    transition: none;
-  }
-}
-
-
-
-
+/* Fine */
