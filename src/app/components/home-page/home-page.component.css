@@ -171,7 +171,7 @@ body {
   position: relative;
   margin: 0;
   z-index: 1;
-  min-height: 20vh;
+  min-height: 30vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -558,11 +558,11 @@ body {
 /* iPhone Pro Max and similar - 430px and above */
 @media (min-width: 430px) and (max-width: 767px) {
   .descrizione h2 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .descrizione p {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .card {
