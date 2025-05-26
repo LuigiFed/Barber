@@ -68,7 +68,7 @@
   top: 50px; /* Inizia subito dopo la navbar */
   left: 0;
   right: 0;
-  bottom: 60px; /* Finisce prima della barra riepilogo */
+  bottom: 60px;
   width: 100%;
   background: rgba(17, 45, 78, 0.95);
   backdrop-filter: blur(10px);
@@ -90,6 +90,7 @@
   margin-bottom: 12px;
   width: 100%;
   max-width: 300px;
+  text-align: center;
 }
 
 .menu-items a {
