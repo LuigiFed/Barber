@@ -246,7 +246,6 @@
   margin: 0;
 }
 
-
 .confirm,
 .delete {
   width: 50%;
@@ -274,6 +273,9 @@
 
 /* Base: fino a 320px (iPhone SE, telefoni molto piccoli) */
 @media (max-width: 320px) {
+    .descrizione {
+    min-height: 2vh;
+  }
   .descrizione h2 {
     font-size: 1.2rem;
   }
@@ -298,6 +300,9 @@
 
 /* Fino a 390px (iPhone 12 mini, 13 mini, modelli compatti) */
 @media (min-width: 321px) and (max-width: 390px) {
+    .descrizione {
+    min-height: 20vh;
+  }
   .descrizione h2 {
     font-size: 1.4rem;
   }
@@ -322,6 +327,9 @@
 
 /* Fino a 414px (iPhone XR, 11, 12/13/14 Pro Max) */
 @media (min-width: 391px) and (max-width: 414px) {
+    .descrizione {
+    min-height: 20vh;
+  }
   .descrizione h2 {
     font-size: 1.5rem;
   }
@@ -343,9 +351,36 @@
     padding: 3vh 5vw;
   }
 }
-
+@media (min-width: 391px) and (max-width: 400px) {
+  .descrizione {
+    min-height: 20vh;
+  }
+  .descrizione h2 {
+    font-size: 1.3rem;
+  }
+  .descrizione p {
+    font-size: 1rem;
+  }
+  .card {
+    font-size: 1.02rem;
+  }
+  .time-slot {
+    font-size: 0.92rem;
+  }
+  .riepilogo-list li {
+    font-size: 1.02rem;
+    padding: 3vh 4.5vw;
+  }
+  .riepilogo-list {
+    height: 83vh;
+    padding: 3vh 5vw;
+  }
+}
 /* Fino a 430px (iPhone 14 Pro e simili, plus max) */
 @media (min-width: 415px) and (max-width: 430px) {
+  .descrizione {
+    min-height: 20vh;
+  }
   .descrizione h2 {
     font-size: 1.6rem;
   }
