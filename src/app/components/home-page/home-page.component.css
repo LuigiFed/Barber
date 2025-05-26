@@ -1,10 +1,11 @@
-/* --- STILI BASE --- */
 .prenotazione {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 50vh;
+  height: 50vh;
 }
+
+/*#region FORM*/
 
 .carousel-wrapper {
   display: flex;
@@ -29,19 +30,19 @@
 }
 
 .carousel-wrapper {
-  scrollbar-width: none;
+  scrollbar-width: none; /* Firefox */
 }
 
 .card {
   flex-shrink: 0;
   min-width: 80px;
-  min-height: 80px;
-  height: auto;
+  height: 80px;
   scroll-snap-align: start;
   background-color: white;
   color: #0e2431;
   border-radius: 8px;
   text-align: center;
+  -webkit-overflow-scrolling: touch;
   padding: 10px;
   margin: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -50,12 +51,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .card p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .orari-container {
@@ -103,9 +104,8 @@
   font-weight: 500;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-size: 0.9rem;
+  font-size: 14px;
 }
-
 .time-slot.disabled {
   color: gray;
   pointer-events: none;
@@ -127,9 +127,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
   height: auto;
-  min-height: 15vh;
+  margin-top: 30px;
+  height: 15vh;
 }
 
 .servizio {
@@ -137,10 +137,8 @@
 }
 
 .servizio img {
-  min-width: 80px;
-  min-height: 80px;
-  width: 20vw;
-  height: auto;
+  height: 80px;
+  width: 80px;
   padding: 10px;
   margin-bottom: 10px;
   background-color: white;
@@ -150,15 +148,12 @@
   cursor: pointer;
 }
 
-/* --- DESCRIZIONE --- */
 .descrizione {
   position: relative;
-  margin: 0 auto;
+  margin: 0;
   z-index: 1;
-  min-height: 30vh;
-  padding: 20px 10px;
+  height: 30vh;
   text-align: center;
-  box-sizing: border-box;
 }
 
 .descrizione::before {
@@ -173,57 +168,49 @@
   width: 100%;
   height: 100%;
   z-index: -1;
-  pointer-events: none;
 }
 
 .descrizione h2 {
   color: white;
   text-align: center;
-  font-size: 1.5rem;
-  padding: 10px 5px;
-  margin: 0 0 10px 0;
+  font-size: 24px;
+  padding: 10px;
+  margin: 0;
 }
 
 .descrizione p {
   color: white;
   text-align: center;
-  font-size: 1rem;
-  padding: 10px 10px 0 10px;
-  margin: 0;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  font-size: 16px;
+  padding: 20px;
 }
 
-/* --- RIEPILOGO --- */
 .riepilogo {
-  height: 65px;
+  height: 60px;
   background-color: #0e2431;
   position: fixed;
   left: 0;
   right: 0;
   z-index: 999;
-  margin: 0;
 }
 
 .riepilogo-list {
-  position: fixed;
-  top: 30px;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  background-color: rgba(14, 36, 49, 0.95);
+  justify-content: center;
+  height: 85vh;
+  background-color: #0e2431f4;
   border: 1px solid black;
-  overflow-y: auto;
+  position: fixed;
+  bottom: 6.5vh;
+  left: 0;
+  margin: 0;
   padding: 16px;
+  right: 0;
   z-index: 900;
-  box-sizing: border-box;
 }
 
-/* voci della lista */
 .riepilogo-list li {
   color: white;
   border: 1px solid white;
@@ -241,19 +228,25 @@
 
 .riepilogo-list li p {
   color: white;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  list-style: none;
   font-size: 14px;
-  margin: 0;
 }
 
-.confirm,
+.confirm {
+  width: 50%;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 40px auto;
+}
 .delete {
   width: 50%;
   padding: 8px;
   border-radius: 4px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
-
 .servizio img:active,
 .card:active,
 .time-slot:active {
@@ -261,252 +254,108 @@
   font-weight: bold;
   transform: scale(0.97);
 }
-
-.card.selected,
-.servizio.selected img,
+.card.selected {
+  border: 1px solid navy;
+  transform: scale(0.97);
+}
+.servizio.selected img {
+  border: 1px solid navy;
+  transform: scale(0.97);
+}
 .time-slot.selected {
   border: 1px solid navy;
   transform: scale(0.97);
 }
-
-/* --- MEDIA QUERIES OTTIMIZZATE --- */
-
-/* Base: fino a 320px (iPhone SE, telefoni molto piccoli) */
-@media (max-width: 320px) {
-  .descrizione {
-    min-height: 20vh;
-  }
-  .descrizione h2 {
-    font-size: 1.1rem;
-  }
-  .descrizione p {
-    font-size: 0.85rem;
-  }
-  .card {
-    font-size: 0.75rem;
-    min-width: 60px;
-    min-height: 60px;
-  }
-  .time-slot {
-    font-size: 0.7rem;
-    padding: 6px 14px;
-  }
-  .riepilogo-list li {
-    font-size: 0.8rem;
-    padding: 1.5vh 2vw;
-  }
-  .riepilogo-list {
-    height: 80vh;
-    padding: 2vh 3vw;
-  }
-  .servizi {
-    margin-top: 15px;
-  }
-  .servizio {
-    padding: 10px;
-  }
-  .servizio img {
-    width: 25vw;
-    min-width: 60px;
-    min-height: 60px;
-    padding: 8px;
-  }
-}
-
-/* Fino a 390px (iPhone 12 mini, 13 mini, modelli compatti) */
-@media (min-width: 321px) and (max-width: 390px) {
-  .descrizione {
-    min-height: 22vh;
-  }
-  .descrizione h2 {
-    font-size: 1.25rem;
-  }
-  .descrizione p {
-    font-size: 0.9rem;
-  }
-  .card {
-    font-size: 0.85rem;
-    min-width: 70px;
-    min-height: 70px;
-  }
-  .time-slot {
-    font-size: 0.8rem;
-    padding: 8px 16px;
-  }
-  .riepilogo-list li {
-    font-size: 0.9rem;
-    padding: 2vh 3vw;
-  }
-  .riepilogo-list {
-    height: 81vh;
-    padding: 3vh 4vw;
-  }
-  .servizi {
-    margin-top: 20px;
-  }
-  .servizio {
-    padding: 12px;
-  }
-  .servizio img {
-    width: 22vw;
-    min-width: 70px;
-    min-height: 70px;
-    padding: 9px;
-  }
-}
-
-/* Fino a 414px (iPhone XR, 11, 12/13/14 Pro Max) */
-@media (min-width: 391px) and (max-width: 414px) {
-  .descrizione {
-    min-height: 25vh;
-  }
-  .descrizione h2 {
-    font-size: 1.4rem;
-  }
-  .descrizione p {
-    font-size: 1rem;
-  }
-  .card {
-    font-size: 1rem;
-    min-width: 80px;
-    min-height: 80px;
-  }
-  .time-slot {
-    font-size: 0.9rem;
-    padding: 10px 20px;
-  }
-  .riepilogo-list li {
-    font-size: 1rem;
-    padding: 3vh 4vw;
-  }
-  .riepilogo-list {
-    height: 82vh;
-    padding: 3vh 5vw;
-  }
-  .servizi {
-    margin-top: 25px;
-  }
-  .servizio {
-    padding: 15px;
-  }
-  .servizio img {
-    width: 20vw;
-    min-width: 80px;
-    min-height: 80px;
-    padding: 10px;
-  }
-}
-
-/* Fino a 430px (iPhone 14 Pro e simili, plus max) */
-@media (min-width: 415px) and (max-width: 430px) {
-  .descrizione {
-    min-height: 25vh;
-  }
-  .descrizione h2 {
-    font-size: 1.5rem;
-  }
-  .descrizione p {
-    font-size: 1.05rem;
-  }
-  .card {
-    font-size: 1.05rem;
-    min-width: 85px;
-    min-height: 85px;
-  }
-  .time-slot {
-    font-size: 0.95rem;
-    padding: 10px 22px;
-  }
-  .riepilogo-list li {
-    font-size: 1.05rem;
-    padding: 3.5vh 5vw;
-  }
-  .riepilogo-list {
-    height: 83vh;
-    padding: 4vh 6vw;
-  }
-  .servizi {
-    margin-top: 25px;
-  }
-  .servizio {
-    padding: 15px;
-  }
-  .servizio img {
-    width: 20vw;
-    min-width: 85px;
-    min-height: 85px;
-    padding: 10px;
-  }
-}
-
-/* Ottimizzazioni particolari tra 321 e 380px */
-@media (min-width: 321px) and (max-width: 380px) {
-  .descrizione h2 {
-    font-size: 1.2rem;
-  }
-  .descrizione p {
-font-size: 0.85rem;
-}
-.card {
-font-size: 0.8rem;
-}
-.time-slot {
-font-size: 0.75rem;
-}
-.servizio img {
-width: 23vw;
-}
-}
-
-/* Media queries per tablet (fino a 768px) */
+/* --- RESPONSIVE BASE --- */
 @media (max-width: 768px) {
-.carousel-wrapper {
-padding: 16px;
-}
-.card {
-min-width: 90px;
-min-height: 90px;
-font-size: 1.1rem;
-}
-.time-slot {
-font-size: 1rem;
-padding: 12px 24px;
-}
-.servizio img {
-width: 18vw;
-min-width: 90px;
-min-height: 90px;
-padding: 12px;
-}
-.riepilogo-list {
-height: 85vh;
-}
+  .card {
+    min-width: 70px;
+    min-height: 70px;
+    font-size: 0.9rem;
+  }
+  .servizio img {
+    width: 80px;
+    height: 80px;
+  }
+  .descrizione {
+    padding: 15px;
+  }
 }
 
-/* Desktop */
-@media (min-width: 769px) {
-.carousel-wrapper {
-max-width: 1024px;
-margin: 20px auto;
+@media (max-width: 480px) {
+  .card {
+    min-width: 60px;
+    min-height: 60px;
+    font-size: 0.8rem;
+  }
+  .servizio img {
+    width: 60px;
+    height: 60px;
+  }
+  .riepilogo {
+    height: 55px;
+  }
 }
-.card {
-min-width: 100px;
-min-height: 100px;
-font-size: 1.15rem;
-padding: 12px;
+
+/* --- IPHONE SPECIFICI --- */
+
+/* iPhone SE (1ª generazione e 2ª, 3ª) - 320px larghezza */
+@media (max-width: 320px) {
+  .riepilogo-list {
+    height: 100vh;
+    bottom: 6vh;
+    left: 0;
+    margin: 0;
+  }
+  .card {
+    min-width: 55px;
+    min-height: 55px;
+    font-size: 0.75rem;
+  }
+  .servizio img {
+    width: 55px;
+    height: 55px;
+  }
+  .riepilogo {
+    height: 50px;
+  }
 }
-.time-slot {
-font-size: 1.1rem;
-padding: 14px 28px;
+
+/* iPhone X, XS, 11 Pro, 12 mini (375px) */
+@media (max-width: 375px) {
+  .card {
+    min-width: 60px;
+    min-height: 60px;
+    font-size: 0.8rem;
+  }
+  .servizio img {
+    width: 65px;
+    height: 65px;
+  }
 }
-.servizio img {
-width: 150px;
-min-width: 150px;
-min-height: 150px;
-padding: 14px;
+
+/* iPhone 12, 13, 14, 15, 15 Pro (390px) */
+@media (max-width: 390px) {
+  .card {
+    min-width: 65px;
+    min-height: 65px;
+    font-size: 0.85rem;
+  }
+  .servizio img {
+    width: 70px;
+    height: 70px;
+  }
 }
-.riepilogo-list {
-height: 90vh;
-max-width: 600px;
-}
+
+/* iPhone 14 Pro Max, 15 Pro Max (430px) */
+@media (max-width: 430px) {
+  .card {
+    min-width: 70px;
+    min-height: 70px;
+    font-size: 0.9rem;
+  }
+  .servizio img {
+    width: 75px;
+    height: 75px;
+  }
 }
