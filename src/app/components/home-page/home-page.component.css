@@ -152,7 +152,7 @@
   position: relative;
   margin: 0;
   z-index: 1;
-  height: 30vh;
+  height: 25vh;
   text-align: center;
 }
 
@@ -181,7 +181,7 @@
 .descrizione p {
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
   padding: 20px;
 }
 
@@ -266,8 +266,152 @@
   border: 1px solid navy;
   transform: scale(0.97);
 }
-/* --- RESPONSIVE BASE --- */
+/* iPhone SE e 6,7,8 - 375px */
+@media (max-width: 375px) {
+  .riepilogo-list {
+    height: 85vh;
+    bottom: 14vh; /* evitato sovrapposizione con la barra fissa */
+  }
+  .riepilogo {
+    height: 55px;
+  }
+  .prenotazione {
+    height: 55vh;
+  }
+  .descrizione {
+    height: 18vh;
+  }
+  .descrizione h2 {
+    font-size: 14px;
+  }
+  .descrizione p {
+    font-size: 11px;
+  }
+  .carousel-wrapper {
+    padding: 5px;
+  }
+  .card {
+    width: 48px;
+    height: 48px;
+  }
+  .card p {
+    font-size: 0.7rem;
+  }
+  .servizio img {
+    width: 48px;
+    height: 48px;
+  }
+  .time-slot {
+    font-size: 0.75rem;
+  }
+}
+
+/* iPhone 12, 13, 14, 15, 12 Pro - 390px */
+@media (max-width: 390px) {
+  .riepilogo-list {
+    height: 80vh;
+    bottom: 13vh;
+  }
+  .riepilogo {
+    height: 58px;
+  }
+  .prenotazione {
+    height: 57vh;
+  }
+  .descrizione {
+    height: 19vh;
+  }
+  .descrizione h2 {
+    font-size: 15px;
+  }
+  .descrizione p {
+    font-size: 12px;
+  }
+  .carousel-wrapper {
+    padding: 4px;
+  }
+  .card {
+    width: 52px;
+    height: 52px;
+  }
+  .card p {
+    font-size: 0.75rem;
+  }
+  .servizio img {
+    width: 52px;
+    height: 52px;
+  }
+  .time-slot {
+    font-size: 0.78rem;
+  }
+}
+
+/* iPhone 14 Pro Max, 15 Pro Max - 430px */
+
+@media (max-width: 430px) {
+  .riepilogo-list {
+    height: 65vh;
+    bottom: 5vh;
+  }
+  .riepilogo {
+    height: 60px;
+  }
+  .prenotazione {
+    height: 60vh;
+  }
+  .descrizione {
+    height: 20vh;
+  }
+  .descrizione h2 {
+    font-size: 16px;
+  }
+  .descrizione p {
+    font-size: 12px;
+  }
+  .carousel-wrapper {
+    padding: 3px;
+  }
+  .card {
+    width: 50px;
+    height: 50px;
+  }
+  .card p{
+    font-size: 0.8rem;
+  }
+  .servizio img {
+    width: 50px;
+    height: 50px;
+  }
+  .time-slot {
+   font-size: 0.8rem;
+  }
+}
+
+
+/* Tablet / schermi medi - 768px */
 @media (max-width: 768px) {
+  .riepilogo-list {
+    height: 85vh;
+    bottom: 9vh; /* barra fissa più alta, quindi bottom più piccolo */
+  }
+  .riepilogo {
+    height: 55px;
+  }
+  .prenotazione {
+    height: 50vh;
+  }
+  .descrizione {
+    height: 23vh;
+  }
+  .descrizione h2 {
+    font-size: 20px;
+  }
+  .descrizione p {
+    font-size: 16px;
+  }
+  .carousel-wrapper {
+    padding: 8px 10px;
+  }
   .card {
     min-width: 70px;
     min-height: 70px;
@@ -277,85 +421,7 @@
     width: 80px;
     height: 80px;
   }
-  .descrizione {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    min-width: 60px;
-    min-height: 60px;
-    font-size: 0.8rem;
-  }
-  .servizio img {
-    width: 60px;
-    height: 60px;
-  }
-  .riepilogo {
-    height: 55px;
-  }
-}
-
-/* --- IPHONE SPECIFICI --- */
-
-/* iPhone SE (1ª generazione e 2ª, 3ª) - 320px larghezza */
-@media (max-width: 320px) {
-  .riepilogo-list {
-    height: 100vh;
-    bottom: 6vh;
-    left: 0;
-    margin: 0;
-  }
-  .card {
-    min-width: 55px;
-    min-height: 55px;
-    font-size: 0.75rem;
-  }
-  .servizio img {
-    width: 55px;
-    height: 55px;
-  }
-  .riepilogo {
-    height: 50px;
-  }
-}
-
-/* iPhone X, XS, 11 Pro, 12 mini (375px) */
-@media (max-width: 375px) {
-  .card {
-    min-width: 60px;
-    min-height: 60px;
-    font-size: 0.8rem;
-  }
-  .servizio img {
-    width: 65px;
-    height: 65px;
-  }
-}
-
-/* iPhone 12, 13, 14, 15, 15 Pro (390px) */
-@media (max-width: 390px) {
-  .card {
-    min-width: 65px;
-    min-height: 65px;
-    font-size: 0.85rem;
-  }
-  .servizio img {
-    width: 70px;
-    height: 70px;
-  }
-}
-
-/* iPhone 14 Pro Max, 15 Pro Max (430px) */
-@media (max-width: 430px) {
-  .card {
-    min-width: 70px;
-    min-height: 70px;
-    font-size: 0.9rem;
-  }
-  .servizio img {
-    width: 75px;
-    height: 75px;
+  .time-slot {
+    font-size: 1rem;
   }
 }
