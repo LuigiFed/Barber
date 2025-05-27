@@ -3,6 +3,8 @@ import { NavComponent } from "../nav/nav.component";
 import { PrenotazioniService } from '../../services/prenotazioni.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-user',
@@ -18,7 +20,7 @@ ngOnInit() {
   this.loadAllReservations();
 }
 
-constructor (private prenotazioni : PrenotazioniService, private auth: AuthService) {}
+constructor (private prenotazioni : PrenotazioniService, private auth: AuthService, private router : Router) {}
 
 
 
@@ -51,7 +53,9 @@ deleteReservation(reservationId: string) {
 }
 
 logout(){
+   localStorage.clear();
   this.auth.logout();
+  this.router.navigate(['/auth']);
   console.log('Logout effettuato');
 }
 
