@@ -11,7 +11,7 @@
       <div class="user-container">
         <div *ngIf="logged && userName" class="user-logged">
           <span class="welcome-msg">Benvenuto, {{ userName }}!</span>
-          <i class="fa-regular fa-user"></i>
+          <i class="fa-regular fa-user" routerLink="/user" routerLinkActive="active"></i>
         </div>
       </div>
 

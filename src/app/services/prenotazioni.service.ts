@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, getDocs, query, where } from '@angular/fire/firestore';
+import { Firestore, QuerySnapshot, addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updateDoc, where } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { app } from '../../firebase-config';
 
 export interface Reservation {
   service: string;
@@ -28,8 +30,7 @@ export class PrenotazioniService {
     async getBookedTimeSlots(date: string): Promise<string[]> {
     const bookedTimes: string[] = [];
     try {
-      // Supponiamo che la collection si chiami "prenotazioni"
-      // e che ogni documento abbia campi: date (stringa 'YYYY-MM-DD') e time (stringa 'HH:mm')
+
       const prenotazioniRef = collection(this.firestore, 'prenotazioni');
       const q = query(prenotazioniRef, where('date', '==', date));
       const querySnapshot = await getDocs(q);
@@ -48,4 +49,42 @@ export class PrenotazioniService {
       return [];
     }
   }
+
+
+async getAllReservations(): Promise<any[]> {
+  try {
+    const colRef = collection(this.firestore, 'reservations');
+    const querySnapshot = await getDocs(colRef);
+    const reservations: any[] = [];
+    querySnapshot.forEach(doc => {
+      reservations.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    return reservations;
+  } catch (error) {
+    console.error('Errore caricando le prenotazioni:', error);
+    return [];
+  }
+}
+
+
+async deleteReservation(userId: string): Promise<void>{
+  console.log('provo a eliminare lo userId:', userId);
+  const db = getFirestore(app);
+  const docRef = doc(db, 'reservations',userId);
+  await deleteDoc(docRef);
+
+
+}
+
+async updateReservations(userId: string) : Promise<void> {
+ const db = getFirestore(app);
+ const docRef = doc(db, 'reservations',userId);
+ await updateDoc(docRef, {
+   status: 'completed'
+ });
+}
+
 }

@@ -103,9 +103,11 @@
 
 <!-- Template inline del dialog -->
 <ng-template #confirmDialog let-dialogRef="dialogRef">
-  <h2 mat-dialog-title class="pop-up-title">Conferma Prenotazione</h2>
+  <h2 mat-dialog-title class="pop-up-title" align="center">Vuoi confermare la prenotazione?</h2>
   <mat-dialog-content class="pop-up-content" align="center">
-    <p>Vuoi confermare la prenotazione?</p>
+    <p>
+    Attenzione! Una volta confermata la prenotazione, potrai cancellarla solo entro le 72 ore precedenti. Dopo questo termine, non sarà più possibile annullarla.
+  </p>
   </mat-dialog-content>
   <mat-dialog-actions align="center">
     <button mat-button  (click)="dialogRef.close(false)">Annulla</button>

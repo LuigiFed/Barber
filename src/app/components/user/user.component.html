@@ -1,0 +1,11 @@
+<app-nav></app-nav>
+<div class="user-reservations" *ngIf="allReservations.length > 0">
+  <h2>Le tue prenotazoni</h2>
+  <ul  *ngFor="let reservation of allReservations">
+    <li>Servizio : {{reservation.service}}</li>
+    <li>Ora : {{reservation.time}}</li>
+   <li>Data: {{ reservation.date | date: 'dd/MM/yyyy' }}</li>
+   <button (click)="deleteReservation(reservation.id)">Cancella prenotazione</button>
+
+  </ul>
+</div>
