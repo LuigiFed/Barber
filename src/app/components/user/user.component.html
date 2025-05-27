@@ -1,19 +1,42 @@
 <app-nav></app-nav>
 <div class="user-reservations" *ngIf="allReservations.length > 0">
-  <h2>Le tue prenotazoni</h2>
-  <ul  *ngFor="let reservation of allReservations">
-    <li>Servizio : {{reservation.service}}</li>
-    <li>Ora : {{reservation.time}}</li>
-   <li>Data: {{ reservation.date | date: 'dd/MM/yyyy' }}</li>
-   <button (click)="deleteReservation(reservation.id)">Cancella prenotazione</button>
-
+  <h2>Le tue prenotazioni</h2>
+  <ul *ngFor="let reservation of allReservations">
+    <li>Servizio : {{ reservation.service }}</li>
+    <li>Ora : {{ reservation.time }}</li>
+    <li>Data: {{ reservation.date | date : "dd/MM/yyyy" }}</li>
+    <div class="icons-container">
+      <i
+        class="delete fa-solid fa-trash"
+        (click)="deleteReservation(reservation.id)"
+        role="button"
+        tabindex="0"
+        aria-label="delete"
+        (keyup.enter)="deleteReservation(reservation.id)"
+      ></i>
+      <i
+        class="calendar fa-solid fa-calendar-days"
+        (click)="addToNativeCalendar(reservation)"
+        role="button"
+        tabindex="0"
+        aria-label="calendar"
+        (keyup.enter)="addToNativeCalendar(reservation)"
+      ></i>
+    </div>
   </ul>
 </div>
 
+<div class="user-reservations" *ngIf="allReservations.length === 0">
+  <h3>Al momento non hai prenotazioni attive</h3>
+</div>
+
 <section class="riepilogo">
-  <i class="fa-solid fa-right-from-bracket" (click)="logout()"
-     role="button"
+  <i
+    class="fa-solid fa-right-from-bracket"
+    (click)="logout()"
+    role="button"
     tabindex="0"
     aria-label="logOut"
-    (keyup.enter)="logout()"></i>
+    (keyup.enter)="logout()"
+  ></i>
 </section>

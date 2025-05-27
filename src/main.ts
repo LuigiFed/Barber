@@ -18,11 +18,12 @@ import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 import { firebaseConfig } from './firebase-config';
 import { PrenotazioniService } from './app/services/prenotazioni.service';
 import  { provideServiceWorker } from '@angular/service-worker';
-
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: LOCALE_ID, useValue: 'it-IT' },
     provideRouter(routes),
+    Calendar,
     provideClientHydration(withEventReplay()),
     importProvidersFrom(HttpClientModule),
 

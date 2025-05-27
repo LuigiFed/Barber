@@ -4,7 +4,7 @@ import { PrenotazioniService } from '../../services/prenotazioni.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 
 @Component({
   selector: 'app-user',
@@ -20,7 +20,7 @@ ngOnInit() {
   this.loadAllReservations();
 }
 
-constructor (private prenotazioni : PrenotazioniService, private auth: AuthService, private router : Router) {}
+constructor (private prenotazioni : PrenotazioniService, private auth: AuthService, private router : Router,private calendar: Calendar) {}
 
 
 
@@ -58,5 +58,24 @@ logout(){
   this.router.navigate(['/auth']);
   console.log('Logout effettuato');
 }
+
+addToNativeCalendar(reservation: any) {
+  const date = new Date(reservation.date);
+  const [hours, minutes] = reservation.time.split(':');
+  date.setHours(+hours, +minutes);
+
+  this.calendar.createEventInteractively(
+    reservation.service,
+    'Luogo prenotazione',
+    'Descrizione prenotazione',
+    date,
+    new Date(date.getTime() + 60 * 60 * 1000)
+  ).then(() => {
+    console.log('Evento creato con successo nel calendario!');
+  }).catch(err => {
+    console.error('Errore creando evento nel calendario:', err);
+  });
+}
+
 
 }
