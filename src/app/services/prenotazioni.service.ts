@@ -79,12 +79,11 @@ async deleteReservation(userId: string): Promise<void>{
 
 }
 
-async updateReservations(userId: string) : Promise<void> {
- const db = getFirestore(app);
- const docRef = doc(db, 'reservations',userId);
- await updateDoc(docRef, {
-   status: 'completed'
- });
+async updateReservation(id: string, updatedData: Partial<Reservation>): Promise<void> {
+  const db = getFirestore(app);
+  const docRef = doc(db, 'reservations', id);
+  await updateDoc(docRef, updatedData);
 }
+
 
 }

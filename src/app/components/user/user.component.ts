@@ -59,23 +59,5 @@ logout(){
   console.log('Logout effettuato');
 }
 
-addToNativeCalendar(reservation: any) {
-  const date = new Date(reservation.date);
-  const [hours, minutes] = reservation.time.split(':');
-  date.setHours(+hours, +minutes);
-
-  this.calendar.createEventInteractively(
-    reservation.service,
-    'Luogo prenotazione',
-    'Descrizione prenotazione',
-    date,
-    new Date(date.getTime() + 60 * 60 * 1000)
-  ).then(() => {
-    console.log('Evento creato con successo nel calendario!');
-  }).catch(err => {
-    console.error('Errore creando evento nel calendario:', err);
-  });
-}
-
 
 }
