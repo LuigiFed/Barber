@@ -7,7 +7,7 @@
     <li>Data: {{ reservation.date | date : "dd/MM/yyyy" }}</li>
     <div class="icons-container">
       <button class="btn-delete"
-        (click)="deleteReservation(reservation.id)"
+        (click)="deleteReservation(reservation.id,reservation.date)"
       >Cancella prenotazione</button>
     </div>
   </ul>
@@ -27,3 +27,12 @@
     (keyup.enter)="logout()"
   ></i>
 </section>
+<ng-template #deleteReservationMessage>
+  <h2 mat-dialog-title align="center">Cancellazione non consentita</h2>
+  <mat-dialog-content align="center">
+    <p>La cancellazione della prenotazione non è possibile a meno di 72 ore dalla data prevista.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close>OK</button>
+  </mat-dialog-actions>
+</ng-template>

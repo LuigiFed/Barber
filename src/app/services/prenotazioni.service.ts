@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, QuerySnapshot, addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, QuerySnapshot, addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { app } from '../../firebase-config';
@@ -8,6 +8,7 @@ export interface Reservation {
   service: string;
   time: string;
   date: Date;
+  userId: string;
 }
 
 @Injectable({
@@ -17,16 +18,16 @@ export class PrenotazioniService {
 
   constructor(private firestore: Firestore, private http: HttpClient) {}
 
-  async addReservation(reservation: Reservation): Promise<void> {
-    try {
-      const colRef = collection(this.firestore, 'reservations');
-      await addDoc(colRef, reservation);
-      console.log('Prenotazione aggiunta con successo');
-    } catch (error) {
-      console.error('Errore aggiungendo la prenotazione:', error);
-      throw error;
-    }
+async addReservation(reservation: Reservation): Promise<void> {
+  try {
+    const docRef = doc(this.firestore, 'reservations', reservation.userId);
+    await setDoc(docRef, reservation);
+    console.log('Prenotazione aggiunta o aggiornata con successo');
+  } catch (error) {
+    console.error('Errore aggiungendo la prenotazione:', error);
+    throw error;
   }
+}
     async getBookedTimeSlots(date: string): Promise<string[]> {
     const bookedTimes: string[] = [];
     try {
@@ -69,6 +70,25 @@ async getAllReservations(): Promise<any[]> {
   }
 }
 
+async checkIfReservationExists(userId: string): Promise<{ date: Date; time: string } | null> {
+  const db = getFirestore(app);
+  const colRef = collection(db, 'reservations');
+  const q = query(colRef, where('userId', '==', userId));
+  const querySnapshot = await getDocs(q);
+
+  if (querySnapshot.empty) {
+    return null;  // Nessuna prenotazione trovata
+  }
+
+
+  const doc = querySnapshot.docs[0];
+  const data = doc.data();
+
+  return {
+    date: data['date'].toDate ? data['date'].toDate() : new Date(data['date']),
+    time: data['time'],
+  };
+}
 
 async deleteReservation(userId: string): Promise<void>{
   console.log('provo a eliminare lo userId:', userId);

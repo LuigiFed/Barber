@@ -22,6 +22,7 @@ export class HomePageComponent {
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   @ViewChild('successDialog') successDialog!: TemplateRef<any>;
   @ViewChild('notLoggedDialog') notLoggedDialog!: TemplateRef<any>;
+  @ViewChild('existingReservation') existingReservation!: TemplateRef<any>;
 
   today = new Date();
   selectedDate: Date | null = null;
@@ -51,12 +52,14 @@ export class HomePageComponent {
   currentAppointment = {
     date: null as Date | null,
     time: null as string | null,
-    service: null as string | null
+    service: null as string | null,
   };
-bookedTimeSlots: string[] = [];
+  bookedTimeSlots: string[] = [];
   appointments: { date: Date; time: string; service: string }[] = [];
   showAppointmentsList: boolean | undefined;
   showTimeSlots: boolean | undefined;
+  existingReservationData: { date: Date; time: string } | null = null;
+  blockedServicesByTime: { [time: string]: string[] } = {};
 
   constructor(
     private reservationService: PrenotazioniService,
@@ -64,56 +67,60 @@ bookedTimeSlots: string[] = [];
     private authService: AuthService
   ) {}
 
-getNext7Days(): Date[] {
-  const days: Date[] = [];
-  let i = 0;
-  while (days.length < 14) {  // vogliamo 7 giorni validi
-    const date = new Date(this.today);
-    date.setDate(this.today.getDate() + i);
+  getNext7Days(): Date[] {
+    const days: Date[] = [];
+    let i = 0;
+    while (days.length < 14) {
+      // vogliamo 7 giorni validi
+      const date = new Date(this.today);
+      date.setDate(this.today.getDate() + i);
 
-    const dayOfWeek = date.getDay(); // domenica = 0, lunedi = 1
-    if (dayOfWeek !== 0 && dayOfWeek !== 1) {
-      days.push(date);
+      const dayOfWeek = date.getDay(); // domenica = 0, lunedi = 1
+      if (dayOfWeek !== 0 && dayOfWeek !== 1) {
+        days.push(date);
+      }
+      i++;
     }
-    i++;
+    return days;
   }
-  return days;
-}
-getAvailableTimeSlots(): string[] {
-  return this.timeSlots.filter(t => !this.bookedTimeSlots.includes(t));
-}
-
-formatDate(date: Date): string {
-  const y = date.getFullYear();
-  const m = ('0' + (date.getMonth() + 1)).slice(-2);
-  const d = ('0' + date.getDate()).slice(-2);
-  return `${y}-${m}-${d}`;
-}
-async selectDate(date: Date) {
-  if (this.selectedDate?.toDateString() === date.toDateString()) {
-    this.selectedDate = null;
-    this.currentAppointment.date = null;
-    this.selectedTime = null;
-    this.currentAppointment.time = null;
-    this.bookedTimeSlots = [];
-  } else {
-    this.selectedDate = date;
-    this.currentAppointment.date = date;
-
-    // formatta la data come stringa 'YYYY-MM-DD' per Firestore
-    const formattedDate = this.formatDate(date);
-
-    // aspetta la lista degli orari già prenotati per la data selezionata
-    this.bookedTimeSlots = await this.reservationService.getBookedTimeSlots(formattedDate);
+  getAvailableTimeSlots(): string[] {
+    return this.timeSlots.filter((t) => !this.bookedTimeSlots.includes(t));
   }
-}
+
+
+  formatDate(date: Date): string {
+    const y = date.getFullYear();
+    const m = ('0' + (date.getMonth() + 1)).slice(-2);
+    const d = ('0' + date.getDate()).slice(-2);
+    return `${y}-${m}-${d}`;
+  }
+  async selectDate(date: Date) {
+    if (this.selectedDate?.toDateString() === date.toDateString()) {
+      this.selectedDate = null;
+      this.currentAppointment.date = null;
+      this.selectedTime = null;
+      this.currentAppointment.time = null;
+      this.bookedTimeSlots = [];
+    } else {
+      this.selectedDate = date;
+      this.currentAppointment.date = date;
+
+      // formatta la data come stringa 'YYYY-MM-DD' per Firestore
+      const formattedDate = this.formatDate(date);
+
+      // aspetta la lista degli orari già prenotati per la data selezionata
+      this.bookedTimeSlots = await this.reservationService.getBookedTimeSlots(
+        formattedDate
+      );
+    }
+  }
 
   isSelected(date: Date): boolean {
     return this.selectedDate?.toDateString() === date.toDateString();
   }
   isSelectedTime(t: string): boolean {
-  return this.selectedTime === t;
-}
+    return this.selectedTime === t;
+  }
 
   selectTime(time: string) {
     if (this.selectedTime === time) {
@@ -134,38 +141,40 @@ async selectDate(date: Date) {
       this.currentAppointment.service = service;
     }
   }
-addElement() {
-  const { date, time, service} = this.currentAppointment;
+  addElement() {
+    const { date, time, service } = this.currentAppointment;
 
-  if (!date || !time || !service) {
-    return;
+    if (!date || !time || !service) {
+      return;
+    }
+
+    if (this.appointments.length > 0) {
+      this.appointments[0] = { date, time, service };
+    } else {
+      this.appointments.push({ date, time, service });
+    }
+
+    localStorage.setItem(
+      'currentAppointment',
+      JSON.stringify({
+        date,
+        time,
+        service,
+      })
+    );
+
+    if (!this.bookedTimeSlots.includes(time)) {
+      this.bookedTimeSlots.push(time);
+    }
+
+    this.showAppointmentsList = true;
+
+    this.currentAppointment = {
+      date: null,
+      time: null,
+      service: null,
+    };
   }
-
-
-  if (this.appointments.length > 0) {
-    this.appointments[0] = { date, time, service};
-  } else {
-    this.appointments.push({ date, time, service});
-  }
-
-  localStorage.setItem("currentAppointment", JSON.stringify({
-    date,
-    time,
-    service
-  }));
-
-  if (!this.bookedTimeSlots.includes(time)) {
-    this.bookedTimeSlots.push(time);
-  }
-
-  this.showAppointmentsList = true;
-
-  this.currentAppointment = {
-    date: null,
-    time: null,
-    service: null
-  };
-}
 
   closeDialog(result: boolean) {
     this.dialog.closeAll();
@@ -179,66 +188,79 @@ addElement() {
     }
   }
 
- async confirmReservations() {
-  if (this.appointments.length === 0) return;
+  async confirmReservations() {
+    if (this.appointments.length === 0) return;
 
-  if (!this.authService.isLoggedIn()) {
-    this.dialog.open(this.notLoggedDialog);
-    return;
-  }
-
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
-  if (!user) {
-    this.dialog.open(this.notLoggedDialog);
-    return;
-  }
-
-  // Recupera i dati dell’utente
-  const userData = await this.authService.getUserData(user.uid);
-
-  if (!userData) {
-    console.error('Dati utente non trovati');
-    return;
-  }
-
-  const dialogRef = this.dialog.open(this.confirmDialog, {
-    disableClose: true,
-    panelClass: 'my-custom-dialog',
-  });
-
-  dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
-    if (confirmed) {
-      for (const res of this.appointments) {
-        // Aggiungi anche i dati utente alla prenotazione
-        const reservationWithUser = {
-          ...res,
-          name: userData['name'],
-          surname: userData['surname'],
-          phone: userData['phone'],
-          userId: user.uid // se vuoi tener traccia dell’utente
-        };
-
-        await this.reservationService.addReservation(reservationWithUser);
-      }
-
-      this.appointments = [];
-      this.showAppointmentsList = false;
-      this.currentAppointment = { date: null, time: null, service: null };
-      this.selectedDate = null;
-      this.selectedTime = null;
-      this.selectedService = null;
-
-      console.log('Prenotazione confermata');
-
-      this.dialog.open(this.successDialog, {
-        panelClass: 'my-custom-dialog',
-      });
-    } else {
-      console.log('Prenotazione annullata');
+    if (!this.authService.isLoggedIn()) {
+      this.dialog.open(this.notLoggedDialog);
+      return;
     }
-  });
-}
 
+    const auth = getAuth(app);
+    const user = auth.currentUser;
+
+    if (!user) {
+      this.dialog.open(this.notLoggedDialog);
+      return;
+    }
+
+    // Recupera i dati dell’utente
+    const userData = await this.authService.getUserData(user.uid);
+
+    if (!userData) {
+      console.error('Dati utente non trovati');
+      return;
+    }
+
+    const dialogRef = this.dialog.open(this.confirmDialog, {
+      disableClose: true,
+      panelClass: 'my-custom-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+      if (confirmed) {
+        for (const res of this.appointments) {
+          const reservationWithUser = {
+            ...res,
+            name: userData['name'],
+            surname: userData['surname'],
+            phone: userData['phone'],
+            userId: user.uid,
+          };
+
+          const existingReservationData =
+            await this.reservationService.checkIfReservationExists(
+              reservationWithUser.userId
+            );
+          if (existingReservationData) {
+            if (existingReservationData) {
+              this.existingReservationData = existingReservationData;
+
+              this.dialog.open(this.existingReservation, {
+                panelClass: 'my-custom-dialog',
+              });
+              return;
+            }
+            return;
+          }
+
+          await this.reservationService.addReservation(reservationWithUser);
+        }
+        this.appointments = [];
+        this.showAppointmentsList = false;
+        this.currentAppointment = { date: null, time: null, service: null };
+        this.selectedDate = null;
+        this.selectedTime = null;
+        this.selectedService = null;
+
+        console.log('Prenotazione confermata');
+
+        this.dialog.open(this.successDialog, {
+          panelClass: 'my-custom-dialog',
+        });
+      } else {
+        console.log('Prenotazione annullata');
+      }
+    });
+  }
 }

@@ -82,7 +82,7 @@
   z-index: 999;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 20px 16px;
+  padding: 20px;
 }
 
 .menu-items li {

@@ -135,3 +135,18 @@
   </mat-dialog-actions>
 </ng-template>
 
+<ng-template #existingReservation let-dialogRef="dialogRef">
+  <h2 mat-dialog-title align="center">Prenotazione esistente</h2>
+  <mat-dialog-content align="center">
+    <p >
+      Hai già effettuato una prenotazione per il giorno
+      {{ existingReservationData?.date | date: 'dd/MM/yyyy' }} alle ore
+      {{ existingReservationData?.time }}
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button (click)="dialogRef.close(false)">Chiudi</button>
+  </mat-dialog-actions>
+</ng-template>
+
+
