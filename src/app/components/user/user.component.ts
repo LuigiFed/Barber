@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavComponent } from "../nav/nav.component";
 import { PrenotazioniService } from '../../services/prenotazioni.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,7 @@ ngOnInit() {
   this.loadAllReservations();
 }
 
-constructor (private prenotazioni : PrenotazioniService){}
+constructor (private prenotazioni : PrenotazioniService, private auth: AuthService) {}
 
 
 
@@ -47,6 +48,11 @@ deleteReservation(reservationId: string) {
 
 
 
+}
+
+logout(){
+  this.auth.logout();
+  console.log('Logout effettuato');
 }
 
 }
